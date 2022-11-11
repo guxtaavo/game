@@ -15,7 +15,7 @@ class CenaHistoria:
             f'Historia Jogo Exemplo.', True, (255,255,255))
         font_opcao_continuar =  pg.font.SysFont("tahoma", 20)
         self.opcao_continuar = font_opcao_continuar.render(f'Pressione espaço para continuar.', True, (255,255,255))  
-        self.carregar_arquivos() 
+        self.carregar_arquivos()
 
     #METODO RODAR DA TELA INICIAL
     def rodar(self):

@@ -6,7 +6,14 @@ from tela_selecao import TelaSelecao
 from tela_inicial import CenaHistoria
 from tela_jogo import Tela_Jogo
 
-bruxa = ["img/bruxa.png", 6, 0.3]
+
+bruxa = ["img/bruxa.png", 6, 4]
+elfo = ["img/elfo.png", 4, 5]
+ogro = ["img/ogro.png", 10, 2]
+principe = ["img/principe.png", 5, 5]
+
+p1 = ogro
+p2 = principe
 
 class Jogo:
     def __init__(self):
@@ -30,6 +37,7 @@ class Jogo:
         cena_historia.rodar()
     
         while True:
-            tela_jogo = Tela_Jogo(self.tela, bruxa[0], bruxa[1], bruxa[2])
-            tela_jogo.rodar()
+            jogadores = Tela_Jogo(self.tela, p1[0], p1[1], p1[2], self.tela, p2[0], p2[1], p2[2])
+            jogadores.rodar()
             
+    
