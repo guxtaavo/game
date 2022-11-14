@@ -1,7 +1,6 @@
-#classe de botões.
-
 import pygame
 
+#Classe para fazer os botões
 class Button:
     def __init__ (self, x, y, imagem, escala):
         largura = imagem.get_width()

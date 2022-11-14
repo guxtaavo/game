@@ -4,6 +4,7 @@ import os
 from configjogo import ConfiJogo
 from tela_selecao import TelaSelecao
 from tela_inicial import CenaHistoria
+from cenario import Cenario
 
 class Tela_Jogo:
     def __init__(self, tela, imagem, vida, velocidade, tela2, imagem2, vida2, velocidade2):
@@ -27,15 +28,17 @@ class Tela_Jogo:
         self.velocidade2 = velocidade2
         self.largura_imagem2 = img2.get_rect().width
         self.altura_imagem2 = img2.get_rect().height
+        self.cenario = Cenario(ConfiJogo.ALTURA // 32)
 
     def rodar(self):
-            while self.esta_rodando:                
+            while self.esta_rodando:    
+                self.tela.fill(ConfiJogo.BRANCO)
+                self.cenario.pintar(self.tela)
                 self.desenha()
                 self.tratamento_de_eventos()
                 pg.display.flip()
 
     def desenha(self):
-        self.tela.fill(ConfiJogo.BRANCO)
         self.coloca_imagem_tela(self.tela)
         pg.display.flip()
 

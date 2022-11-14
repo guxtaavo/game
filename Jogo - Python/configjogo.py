@@ -1,8 +1,9 @@
 class ConfiJogo:
-    ALTURA = 800
-    LARGURA = 600
+    ALTURA = 1024
+    LARGURA = 768
     PRETO = (0, 0, 0)
     BRANCO = (255, 255, 255)
+    AZUL = (0, 0, 255)
     TITULO_JOGO = "Game"
     FPS = 60
     FONTE_HISTORIA = 30
