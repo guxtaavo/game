@@ -1,6 +1,8 @@
+# CLASSE PARA AS CONDIGURAÇÕES PRINCIPAIS DO JOGO
+
 class ConfiJogo:
-    ALTURA = 1024
-    LARGURA = 768
+    ALTURA = 800
+    LARGURA = 608
     PRETO = (0, 0, 0)
     BRANCO = (255, 255, 255)
     AZUL = (0, 0, 255)

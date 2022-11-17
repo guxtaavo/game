@@ -2,9 +2,15 @@ import pygame as pg
 import sys
 import os
 from configjogo import ConfiJogo
-from botoes import Button
+from botoes import Botao
+from personagens import Personagens
 
+# TELA DA SELEÇÃO DOS PERSONAGENS
 class TelaSelecao:
+
+    p1 = Personagens.BRUXA
+    p2 = Personagens.ELFO
+
     def __init__ (self, tela):
         self.tela = tela
         self.esta_rodando = True
@@ -12,6 +18,7 @@ class TelaSelecao:
         font_titulo_selecao = pg.font.SysFont(None, 30)
         self.titulo_selecao = font_titulo_selecao.render(
             f'Seleção de Personagens', True, (255,255,255))
+        
 
     #ESCREVE OS TEXTOS NA PARTE DA SELEÇÃO DE PERSONAGENS
     def desenha_textos(self, tela):
@@ -20,8 +27,8 @@ class TelaSelecao:
     #COLOCA AS IMAGENS DE FUNDO
     def desenha(self):
         self.tela.fill((154,154,154))
-        self.coloca_imagem_tela(self.tela)
         self.desenha_textos(self.tela)
+        self.coloca_imagem_tela(self.tela)
         pg.display.flip()
 
     #CARREGA AS IMAGENS DOS PERSONAGENS NA TELA DA SELEÇÃO
@@ -52,34 +59,65 @@ class TelaSelecao:
 
     #CRIA OS BOTÕES
     def cria_instancia_botao(self):
-        self.botao_personagem_1 = Button(25,450, self.imagem_personagem1 , 0.8)
-        self.botao_personagem_2 = Button(225,450, self.imagem_personagem2 , 0.8)
-        self.botao_personagem_3 = Button(425,450, self.imagem_personagem3 , 0.8)
-        self.botao_personagem_4 = Button(625,450, self.imagem_personagem4 , 0.8)
+        self.botao_personagem_1 = Botao(25,450, self.imagem_personagem1 , 0.8)
+        self.botao_personagem_2 = Botao(225,450, self.imagem_personagem2 , 0.8)
+        self.botao_personagem_3 = Botao(425,450, self.imagem_personagem3 , 0.8)
+        self.botao_personagem_4 = Botao(625,450, self.imagem_personagem4 , 0.8)
 
     #CRIA OS EVENTOS COM OS BOTOES
-    def tratamento_evento_botao(self):
+    def escolher_p1(self):
 
         if self.botao_personagem_1.desenha(self.tela):
+            self.p1 = Personagens.BRUXA
             print('Selecionado personagem 1')
+            self.esta_rodando = False
                    
         if self.botao_personagem_2.desenha(self.tela):
+            self.p1 = Personagens.ELFO
             print('Selecionado personagem 2')
+            self.esta_rodando = False
 
         if self.botao_personagem_3.desenha(self.tela):
+            self.p1 = Personagens.OGRO
             print('Selecionado personagem 3')
+            self.esta_rodando = False
 
         if self.botao_personagem_4.desenha(self.tela):
-            print('Selecionado personagem 4')          
+            self.p1 = Personagens.PRINCIPE
+            print('Selecionado personagem 4')
+            self.esta_rodando = False
+
+
+    def escolher_p2(self):
+
+        if self.botao_personagem_1.desenha(self.tela):
+            self.p2 = Personagens.BRUXA
+            print('Selecionado personagem 1')
+            self.esta_rodando = False
+                   
+        if self.botao_personagem_2.desenha(self.tela):
+            self.p2 = Personagens.ELFO
+            print('Selecionado personagem 2')
+            self.esta_rodando = False
+
+        if self.botao_personagem_3.desenha(self.tela):
+            self.p2 = Personagens.OGRO
+            print('Selecionado personagem 3')
+            self.esta_rodando = False
+
+        if self.botao_personagem_4.desenha(self.tela):
+            self.p2 = Personagens.PRINCIPE
+            print('Selecionado personagem 4')
+            self.esta_rodando = False     
 
 
     #TRATAMENTO DE EVENTOS
     def tratamento_de_eventos(self):
-        pg.event.get()
         
-        # evento de saida
-        if pg.key.get_pressed()[pg.K_ESCAPE]:
-            sys.exit(0)
+        for event in pg.event.get():
+        #PARA SAIR DO JOGO
+            if pg.key.get_pressed()[pg.K_ESCAPE] or event.type == pg.QUIT:
+                sys.exit()
 
         
     #RODA O JOGO
@@ -88,4 +126,5 @@ class TelaSelecao:
                 self.desenha()
                 self.tratamento_de_eventos()
                 self.cria_instancia_botao()
-                self.tratamento_evento_botao()
+                self.escolher_p1()
+                self.escolher_p2()

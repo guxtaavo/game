@@ -1,19 +1,14 @@
 import pygame as pg
 import sys
-import os
 from configjogo import ConfiJogo
 from tela_selecao import TelaSelecao
-from tela_inicial import CenaHistoria
+from tela_inicial import Menu
 from tela_jogo import Tela_Jogo
+from personagens import Personagens
 
-
-bruxa = ["img/bruxa.png", 6, 4]
-elfo = ["img/elfo.png", 4, 5]
-ogro = ["img/ogro.png", 10, 2]
-principe = ["img/principe.png", 5, 5]
-
-p1 = ogro
-p2 = principe
+# #PASSA PARA O JOGO A VARIAVEL DOS PERSONAGENS ESCOLHIDOS PELO USUARIO
+p1 = TelaSelecao.p1
+p2 = TelaSelecao.p2
 
 class Jogo:
     def __init__(self):
@@ -33,9 +28,16 @@ class Jogo:
 
     def rodar(self):
         #mostrando a cena inicial ((cena historia))
-        cena_historia = CenaHistoria(self.tela)
+        cena_historia = Menu(self.tela)
         cena_historia.rodar()
-    
+        tela_selecao = TelaSelecao(self.tela)
+        tela_selecao.rodar()
+
+        cena_selecao = TelaSelecao(self.tela)
+        cena_selecao.rodar()
+
+        # RECEBE OS JOGADORES E PASSA PARA O JOGO OS ATRIBUTOS DO PERSONAGENS
+        # EX.: IMG, VIDA, VELOCIDADE...
         while True:
             jogadores = Tela_Jogo(self.tela, p1[0], p1[1], p1[2], self.tela, p2[0], p2[1], p2[2])
             jogadores.rodar()

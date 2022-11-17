@@ -1,10 +1,8 @@
 import pygame as pg
 import sys
-import os
 from configjogo import ConfiJogo
-from tela_selecao import TelaSelecao
-from tela_inicial import CenaHistoria
 from cenario import Cenario
+
 
 class Tela_Jogo:
     def __init__(self, tela, imagem, vida, velocidade, tela2, imagem2, vida2, velocidade2):
@@ -28,7 +26,8 @@ class Tela_Jogo:
         self.velocidade2 = velocidade2
         self.largura_imagem2 = img2.get_rect().width
         self.altura_imagem2 = img2.get_rect().height
-        self.cenario = Cenario(ConfiJogo.ALTURA // 32)
+        # PASSANDO O TAMANHO DO BLOCO DE 16PX POR 16PX
+        self.cenario = Cenario(16)
 
     def rodar(self):
             while self.esta_rodando:    
@@ -46,6 +45,7 @@ class Tela_Jogo:
         tela.blit(self.imagem, (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y))
         tela.blit(self.imagem2, (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y))
 
+    # FUNÇÃO QUE TRATA OS EVENTOS DO JOGO, COMO A MOVIMENTAÇÃO DOS PERSONAGENS
     def tratamento_de_eventos(self):
         self.relogio.tick(60)
 

@@ -5,15 +5,15 @@ from configjogo import ConfiJogo
 
 
 #CLASSE PARA A HISTÓRIA DO JOGO
-class CenaHistoria:
+class Menu:
     def __init__ (self, tela):
         self.tela = tela
         self.esta_rodando = True
         #CRIA O TEXTO DE HISTORIA QUE SERA MOSTRADA NA PRIMEIRA TELA E OPÇÃO CONTINUAR
-        font_historia = pg.font.SysFont(None, 30)
+        font_historia = pg.font.SysFont("monospace", 50)
         self.historia = font_historia.render(
-            f'Historia Jogo Exemplo.', True, (255,255,255))
-        font_opcao_continuar =  pg.font.SysFont("tahoma", 20)
+            f'NOME DO JOGO.', True, (255,255,255))
+        font_opcao_continuar =  pg.font.SysFont("monospace", 20)
         self.opcao_continuar = font_opcao_continuar.render(f'Pressione espaço para continuar.', True, (255,255,255))  
         self.carregar_arquivos()
 
@@ -37,7 +37,7 @@ class CenaHistoria:
       
             diretorio_imagens = os.path.join(os.getcwd(), 'img')
             diretorio_fonte = os.path.join(os.getcwd(), 'fonte')
-            self.diretorio_background = os.path.join(diretorio_imagens, 'background.jpg')
+            self.diretorio_background = os.path.join(diretorio_imagens, 'tela_inicio.png')
             self.imagem_background = pg.image.load(self.diretorio_background).convert()
     
     #COLOCA A IMAGEM DE FUNDO DA TELA
@@ -46,18 +46,17 @@ class CenaHistoria:
 
     #DESENHA OS TEXTOS NA TELA DE INICIO
     def desenha_textos(self, tela):
-        tela.blit(self.historia, (40, 40))
+        tela.blit(self.historia, (220,30))
         tela.blit(self.opcao_continuar, (300,550)) 
     
     #EVENTOS DO JOGO
     def tratamento_de_eventos(self):
         
-        pg.event.get()
-        
-        # evento de saida
-        if pg.key.get_pressed()[pg.K_ESCAPE]:
-            sys.exit(0)
+        for event in pg.event.get():
+        #PARA SAIR DO JOGO
+            if pg.key.get_pressed()[pg.K_ESCAPE] or event.type == pg.QUIT:
+                sys.exit()
 
-        # evento de prosseguimento
-        if pg.key.get_pressed()[pg.K_SPACE]:            
-            self.esta_rodando = False
+        # EVENTO DE PROSSEGUIMENTO
+            if pg.key.get_pressed()[pg.K_SPACE]:            
+                self.esta_rodando = False
