@@ -26,8 +26,7 @@ class Tela_Jogo:
         self.velocidade2 = velocidade2
         self.largura_imagem2 = img2.get_rect().width
         self.altura_imagem2 = img2.get_rect().height
-        # PASSANDO O TAMANHO DO BLOCO DE 16PX POR 16PX
-        self.cenario = Cenario(16)
+        self.cenario = Cenario(ConfiJogo.TAMANHO_BLOCO, self.tela)
 
     def rodar(self):
             while self.esta_rodando:    
@@ -82,31 +81,7 @@ class Tela_Jogo:
             if pg.key.get_pressed()[pg.K_j]:            
                 ConfiJogo.P2_POSICAO_X -= self.velocidade2
 
-            #CONDICIONAIS PARA LIMITAR A TELA JOGADOR 1
-            if ConfiJogo.P1_POSICAO_Y >= ConfiJogo.ALTURA + 2000:
-                ConfiJogo.P1_POSICAO_Y = ConfiJogo.ALTURA + 2000
-
-            if ConfiJogo.P1_POSICAO_Y < 0:
-                ConfiJogo.P1_POSICAO_Y = 0
-
-            if ConfiJogo.P1_POSICAO_X >= ConfiJogo.LARGURA + 159:
-                ConfiJogo.P1_POSICAO_X = ConfiJogo.LARGURA + 159
-
-            if ConfiJogo.P1_POSICAO_X < 0:
-                ConfiJogo.P1_POSICAO_X = 0
-
-            #CONDICIONAIS PARA LIMITAR A TELA JOGADOR 2
-            if ConfiJogo.P2_POSICAO_Y >= ConfiJogo.ALTURA + 2000:
-                ConfiJogo.P2_POSICAO_Y = ConfiJogo.ALTURA + 2000
-
-            if ConfiJogo.P2_POSICAO_Y < 0:
-                ConfiJogo.P2_POSICAO_Y = 0
-
-            if ConfiJogo.P2_POSICAO_X >= ConfiJogo.LARGURA + 159:
-                ConfiJogo.P2_POSICAO_X = ConfiJogo.LARGURA + 159
-
-            if ConfiJogo.P2_POSICAO_X < 0:
-                ConfiJogo.P2_POSICAO_X = 0
+          
 
             pg.display.flip()
 

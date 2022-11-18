@@ -12,10 +12,14 @@ class Menu:
         #CRIA O TEXTO DE HISTORIA QUE SERA MOSTRADA NA PRIMEIRA TELA E OPÇÃO CONTINUAR
         font_historia = pg.font.SysFont("monospace", 50)
         self.historia = font_historia.render(
-            f'NOME DO JOGO.', True, (255,255,255))
+            f'NOME CRIATIVO', True, (255,255,255))
         font_opcao_continuar =  pg.font.SysFont("monospace", 20)
         self.opcao_continuar = font_opcao_continuar.render(f'Pressione espaço para continuar.', True, (255,255,255))  
         self.carregar_arquivos()
+
+        # PARA FAZER PISCAR O CÓDIGO
+        # self.cronometro = Cronometro()
+        # self.texto_continuar = True
 
     #METODO RODAR DA TELA INICIAL
     def rodar(self):
@@ -37,7 +41,7 @@ class Menu:
       
             diretorio_imagens = os.path.join(os.getcwd(), 'img')
             diretorio_fonte = os.path.join(os.getcwd(), 'fonte')
-            self.diretorio_background = os.path.join(diretorio_imagens, 'tela_inicio.png')
+            self.diretorio_background = os.path.join(diretorio_imagens, 'tela_inicial.jpg')
             self.imagem_background = pg.image.load(self.diretorio_background).convert()
     
     #COLOCA A IMAGEM DE FUNDO DA TELA
@@ -47,7 +51,7 @@ class Menu:
     #DESENHA OS TEXTOS NA TELA DE INICIO
     def desenha_textos(self, tela):
         tela.blit(self.historia, (220,30))
-        tela.blit(self.opcao_continuar, (300,550)) 
+        tela.blit(self.opcao_continuar, (230,550)) 
     
     #EVENTOS DO JOGO
     def tratamento_de_eventos(self):

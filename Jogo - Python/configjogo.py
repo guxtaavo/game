@@ -1,4 +1,5 @@
 # CLASSE PARA AS CONDIGURAÇÕES PRINCIPAIS DO JOGO
+import pygame as pg
 
 class ConfiJogo:
     ALTURA = 800
@@ -13,4 +14,8 @@ class ConfiJogo:
     P1_POSICAO_Y = 100
     P2_POSICAO_X = 400
     P2_POSICAO_Y = 400
-    
+    TAMANHO_BLOCO = 16
+    IMAGEM_AGUA = pg.image.load("img/agua.png")
+    IMAGEM_PEDRA = pg.image.load("img/pedra.png")
+    IMAGEM_GRAMA = pg.image.load("img/grama.png")
+    IMAGEM_MADEIRA = pg.image.load("img/madeira.png")

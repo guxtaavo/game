@@ -6,7 +6,7 @@ from tela_inicial import Menu
 from tela_jogo import Tela_Jogo
 from personagens import Personagens
 
-# #PASSA PARA O JOGO A VARIAVEL DOS PERSONAGENS ESCOLHIDOS PELO USUARIO
+# PASSA PARA O JOGO A VARIAVEL DOS PERSONAGENS ESCOLHIDOS PELO USUARIO
 p1 = TelaSelecao.p1
 p2 = TelaSelecao.p2
 
