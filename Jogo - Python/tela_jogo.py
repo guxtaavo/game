@@ -26,6 +26,7 @@ class Tela_Jogo:
         self.velocidade2 = velocidade2
         self.largura_imagem2 = img2.get_rect().width
         self.altura_imagem2 = img2.get_rect().height
+        
         self.cenario = Cenario(ConfiJogo.TAMANHO_BLOCO, self.tela)
 
     def rodar(self):

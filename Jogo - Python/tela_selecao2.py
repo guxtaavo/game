@@ -4,10 +4,10 @@ from configjogo import ConfiJogo
 from botoes import Botao
 from personagens import Personagens
 
-# TELA DA SELEÇÃO DO PERSONAGEM 1
-class TelaSelecao:
-    PLAYER1 = Personagens.BRUXA
-                   
+# TELA DA SELEÇÃO DO PERSONAGEM 2
+class TelaSelecao2:
+    PLAYER2 = Personagens.BRUXA
+
     def __init__ (self, tela):
         self.tela = tela
         self.esta_rodando = True
@@ -15,7 +15,7 @@ class TelaSelecao:
         font_titulo_selecao = pg.font.SysFont("monospace", 35)
         self.titulo_selecao = font_titulo_selecao.render(
             f'Selecione o seu personangem:', True, (255,255,255))
-    
+
     #ESCREVE OS TEXTOS NA PARTE DA SELEÇÃO DE PERSONAGENS
     def desenha_textos(self, tela):
         tela.blit(self.titulo_selecao, (105, 40))
@@ -59,14 +59,37 @@ class TelaSelecao:
 
             self.imagem_personagem4 = pg.image.load("img/elfo.png")
             self.imagem_personagem4 = pg.transform.scale(self.imagem_personagem4, (128,172))
-
-
     #CRIA OS BOTÕES
     def cria_instancia_botao(self):
         self.botao_personagem_1 = Botao(25,450, self.imagem_botao_personagem1 , 0.8)
         self.botao_personagem_2 = Botao(225,450, self.imagem_botao_personagem2 , 0.8)
         self.botao_personagem_3 = Botao(425,450, self.imagem_botao_personagem3 , 0.8)
         self.botao_personagem_4 = Botao(625,450, self.imagem_botao_personagem4 , 0.8)
+
+    def escolher_p2(self):
+            if pg.key.get_pressed()[pg.K_7]:
+                    TelaSelecao2.PLAYER2 = Personagens.BRUXA
+                    print("j2 bruxa")
+                    self.esta_rodando = False
+                  
+
+            if pg.key.get_pressed()[pg.K_8]:
+                    TelaSelecao2.PLAYER2 = Personagens.OGRO
+                    print("j2 ogro")
+                    self.esta_rodando = False
+                
+                
+            if pg.key.get_pressed()[pg.K_9]:
+                    TelaSelecao2.PLAYER2 = Personagens.PRINCIPE
+                    print("j2 principe")
+                    self.esta_rodando = False
+                
+                
+            if pg.key.get_pressed()[pg.K_0]:
+                    TelaSelecao2.PLAYER2 = Personagens.ELFO
+                    print("j2 elfo")
+                    self.esta_rodando = False
+                    
 
     #TRATAMENTO DE EVENTOS
     def tratamento_de_eventos(self):
@@ -77,33 +100,11 @@ class TelaSelecao:
             if pg.key.get_pressed()[pg.K_ESCAPE] or event.type == pg.QUIT:
                 sys.exit()
 
-    #CRIA OS EVENTOS PRESSIONANDO A TECLA
-    def escolher_p1(self):
-                if pg.key.get_pressed()[pg.K_1]:   
-                    TelaSelecao.PLAYER1 = Personagens.BRUXA
-                    print("p1 bruxa selecionado")
-                    self.esta_rodando = False
-                
-                if pg.key.get_pressed()[pg.K_2]:  
-                    TelaSelecao.PLAYER1 = Personagens.OGRO
-                    print("p1 ogro selecionado")
-                    self.esta_rodando = False
-                    
-                if pg.key.get_pressed()[pg.K_3]:  
-                    TelaSelecao.PLAYER1 = Personagens.PRINCIPE
-                    print("p1 principe selecionado")
-                    self.esta_rodando = False
-                    
-                if pg.key.get_pressed()[pg.K_4]:  
-                    TelaSelecao.PLAYER1 = Personagens.ELFO
-                    print("p1 elfo selecionado")
-                    self.esta_rodando = False 
-
-    #RODAR O JOGO
+        
+    #RODA O JOGO
     def rodar(self):
             while self.esta_rodando:
                 self.desenha()
                 self.tratamento_de_eventos()
                 self.cria_instancia_botao()
-                self.escolher_p1()
-                
+                self.escolher_p2()

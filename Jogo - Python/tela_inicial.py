@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 import os
 from configjogo import ConfiJogo
+from cronometro import Cronometro
 
 
 #CLASSE PARA A HISTÓRIA DO JOGO
@@ -17,19 +18,20 @@ class Menu:
         self.opcao_continuar = font_opcao_continuar.render(f'Pressione espaço para continuar.', True, (255,255,255))  
         self.carregar_arquivos()
 
-        # PARA FAZER PISCAR O CÓDIGO
-        # self.cronometro = Cronometro()
-        # self.texto_continuar = True
+        # VARIAVEIS PARA FAZER PISCAR O TEXTO 
+        self.cronometro = Cronometro()
+        self.mostrar_opcao = True
 
     #METODO RODAR DA TELA INICIAL
     def rodar(self):
             while self.esta_rodando:                
                 self.desenha()
                 self.tratamento_de_eventos()    
+                self.atualiza_estado()
 
     #FUNÇÃO PARA DESENHAR OS TEXTOS NA TELA INICIAL
     def desenha(self):
-    
+        
         self.tela.fill((154,154,154))
         self.coloca_imagem_tela(self.tela)
         self.desenha_textos(self.tela) 
@@ -51,8 +53,18 @@ class Menu:
     #DESENHA OS TEXTOS NA TELA DE INICIO
     def desenha_textos(self, tela):
         tela.blit(self.historia, (220,30))
-        tela.blit(self.opcao_continuar, (230,550)) 
+
+        #IF PARA FAZER PISCAR
+        if self.mostrar_opcao:
+            tela.blit(self.opcao_continuar, (220,550)) 
     
+    # FUNÇÃO QUE FAZ PISCAR
+    def atualiza_estado(self):
+        if self.cronometro.tempo_passado() > 0.4:
+            self.mostrar_opcao = not self.mostrar_opcao
+            self.cronometro.reset()
+
+
     #EVENTOS DO JOGO
     def tratamento_de_eventos(self):
         
