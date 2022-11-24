@@ -1,6 +1,5 @@
 import pygame as pg
 import sys
-from configjogo import ConfiJogo
 from botoes import Botao
 from personagens import Personagens
 
@@ -13,12 +12,36 @@ class TelaSelecao:
         self.esta_rodando = True
         self.carregar_arquivos()
         font_titulo_selecao = pg.font.SysFont("monospace", 35)
+        font_titulo_personagens = pg.font.SysFont("monospace", 18)
+
         self.titulo_selecao = font_titulo_selecao.render(
             f'Selecione o seu personangem:', True, (255,255,255))
+
+        self.titulo = font_titulo_selecao.render(
+            f'Jogador 1', True, (255,255,255))
+
+        self.p1 = font_titulo_personagens.render(
+            f'Pressione 1', True, (255,255,255))
+        
+        self.p2 = font_titulo_personagens.render(
+            f'Pressione 2', True, (255,255,255))
+
+        self.p3 = font_titulo_personagens.render(
+            f'Pressione 3', True, (255,255,255))
+
+        self.p4 = font_titulo_personagens.render(
+            f'Pressione 4', True, (255,255,255))
+
     
     #ESCREVE OS TEXTOS NA PARTE DA SELEÇÃO DE PERSONAGENS
     def desenha_textos(self, tela):
-        tela.blit(self.titulo_selecao, (105, 40))
+        tela.blit(self.titulo, (320, 40))
+        tela.blit(self.titulo_selecao, (105, 90))
+        tela.blit(self.p1, (50, 510))
+        tela.blit(self.p2, (250, 510))
+        tela.blit(self.p3, (450, 510))
+        tela.blit(self.p4, (650, 510))
+
 
     #COLOCA AS IMAGENS DE FUNDO
     def desenha(self):
@@ -81,22 +104,18 @@ class TelaSelecao:
     def escolher_p1(self):
                 if pg.key.get_pressed()[pg.K_1]:   
                     TelaSelecao.PLAYER1 = Personagens.BRUXA
-                    print("p1 bruxa selecionado")
                     self.esta_rodando = False
                 
                 if pg.key.get_pressed()[pg.K_2]:  
                     TelaSelecao.PLAYER1 = Personagens.OGRO
-                    print("p1 ogro selecionado")
                     self.esta_rodando = False
                     
                 if pg.key.get_pressed()[pg.K_3]:  
                     TelaSelecao.PLAYER1 = Personagens.PRINCIPE
-                    print("p1 principe selecionado")
                     self.esta_rodando = False
                     
                 if pg.key.get_pressed()[pg.K_4]:  
                     TelaSelecao.PLAYER1 = Personagens.ELFO
-                    print("p1 elfo selecionado")
                     self.esta_rodando = False 
 
     #RODAR O JOGO

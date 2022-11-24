@@ -4,6 +4,7 @@ from configjogo import ConfiJogo
 
 #CRIANDO CLASSE CENARIO
 class Cenario:
+
     def __init__(self, tamanho, tela):
         self.tamanho = tamanho
         self.tela = tela

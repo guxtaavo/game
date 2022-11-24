@@ -6,10 +6,8 @@ from tela_selecao2 import TelaSelecao2
 from tela_inicial import Menu
 from tela_jogo import Tela_Jogo
 from personagens import Personagens
-
-# PASSA PARA O JOGO A VARIAVEL DOS PERSONAGENS ESCOLHIDOS PELO USUARIO
-# p1 = TelaSelecao.PLAYER1
-# p2 = TelaSelecao2.PLAYER2
+from tela_historia import Tela_Historia
+from tela_historia2 import Tela_Historia_2
 
 class Jogo:
 
@@ -32,18 +30,26 @@ class Jogo:
 
     def rodar(self):
         # MOSTRA A TELA INICIAL
-        cena_historia = Menu(self.tela)
-        cena_historia.rodar()
+        menu = Menu(self.tela)
+        menu.rodar()
+
+        # MOSTRA A TELA DE HISTORIA 1
+        tela_historia = Tela_Historia(self.tela)
+        tela_historia.rodar()
+
+        # MOSTRA A TELA DE HISTORIA 2
+        tela_historia2 = Tela_Historia_2(self.tela)
+        tela_historia2.rodar()
 
         # MOSTRA A TELA PRA ESCOLHER O P1
         tela_selecao = TelaSelecao(self.tela)
         tela_selecao.rodar()
         
-        #MOSTRA A TELA PRA ESCOLHER O P2
+        # MOSTRA A TELA PRA ESCOLHER O P2
         cena_selecao2 = TelaSelecao2(self.tela)
         cena_selecao2.rodar()
 
-        #RECEBE OS PERSONAGENS ESCOLHIDOS PELOS JOGADORES
+        # RECEBE OS PERSONAGENS ESCOLHIDOS PELOS JOGADORES
         p1 = TelaSelecao.PLAYER1
         p2 = TelaSelecao2.PLAYER2
 
