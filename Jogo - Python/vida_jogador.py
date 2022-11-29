@@ -23,5 +23,3 @@ class Vida:
         pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.P2_POSICAO_X-9 , (ConfiJogo.P2_POSICAO_Y-15), 61 , 11), 2)
 
         pg.display.flip()
-       
-        

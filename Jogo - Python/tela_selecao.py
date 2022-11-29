@@ -104,18 +104,30 @@ class TelaSelecao:
     def escolher_p1(self):
                 if pg.key.get_pressed()[pg.K_1]:   
                     TelaSelecao.PLAYER1 = Personagens.BRUXA
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                 
                 if pg.key.get_pressed()[pg.K_2]:  
                     TelaSelecao.PLAYER1 = Personagens.OGRO
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                     
                 if pg.key.get_pressed()[pg.K_3]:  
                     TelaSelecao.PLAYER1 = Personagens.PRINCIPE
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                     
                 if pg.key.get_pressed()[pg.K_4]:  
                     TelaSelecao.PLAYER1 = Personagens.ELFO
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False 
 
     #RODAR O JOGO

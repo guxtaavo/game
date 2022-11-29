@@ -9,7 +9,7 @@ class ConfiJogo:
     PRETO = (0, 0, 0)
     BRANCO = (255, 255, 255)
     AZUL = (0, 0, 255)
-    TITULO_JOGO = "Game"
+    TITULO_JOGO = "The Kingdom"
     FPS = 60
     FONTE_HISTORIA = 30
     P1_POSICAO_X = 100
@@ -21,7 +21,7 @@ class ConfiJogo:
     IMAGEM_PEDRA = pg.image.load("img/pedra.png")
     IMAGEM_GRAMA = pg.image.load("img/grama.png")
     IMAGEM_MADEIRA = pg.image.load("img/madeira.png")
-    DURACAO_PARTIDA = 120
+    DURACAO_PARTIDA = 3
     ALTURA_TEMPO = 20
 
     # SEQUÊNCIA DE IF PARA FAZER COM QUE A BARRA FIQUE COM A LARGURA CORRETA E PROPORCIONAL

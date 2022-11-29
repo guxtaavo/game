@@ -69,5 +69,8 @@ class Menu:
                 sys.exit()
 
         # EVENTO DE PROSSEGUIMENTO
-            if pg.key.get_pressed()[pg.K_SPACE]:            
+            if pg.key.get_pressed()[pg.K_SPACE]:
+                prosseguir = pg.mixer.Sound("sons/click.wav")
+                prosseguir.set_volume(0.1)
+                prosseguir.play()         
                 self.esta_rodando = False

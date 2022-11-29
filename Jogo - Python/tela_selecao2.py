@@ -91,21 +91,33 @@ class TelaSelecao2:
     def escolher_p2(self):
             if pg.key.get_pressed()[pg.K_7]:
                     TelaSelecao2.PLAYER2 = Personagens.BRUXA
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                   
 
             if pg.key.get_pressed()[pg.K_8]:
                     TelaSelecao2.PLAYER2 = Personagens.OGRO
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                 
                 
             if pg.key.get_pressed()[pg.K_9]:
                     TelaSelecao2.PLAYER2 = Personagens.PRINCIPE
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                 
                 
             if pg.key.get_pressed()[pg.K_0]:
                     TelaSelecao2.PLAYER2 = Personagens.ELFO
+                    prosseguir = pg.mixer.Sound("sons/personagem.wav")
+                    prosseguir.set_volume(0.1)
+                    prosseguir.play()  
                     self.esta_rodando = False
                     
 
