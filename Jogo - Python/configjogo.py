@@ -21,19 +21,13 @@ class ConfiJogo:
     IMAGEM_PEDRA = pg.image.load("img/pedra.png")
     IMAGEM_GRAMA = pg.image.load("img/grama.png")
     IMAGEM_MADEIRA = pg.image.load("img/madeira.png")
-    DURACAO_PARTIDA = 3
+    DURACAO_PARTIDA = 90
     ALTURA_TEMPO = 20
 
-    # SEQUÊNCIA DE IF PARA FAZER COM QUE A BARRA FIQUE COM A LARGURA CORRETA E PROPORCIONAL
-    if TelaSelecao.PLAYER1[1] == 12:
-        VIDA_P1 = TelaSelecao.PLAYER1[1] * 5
-    if TelaSelecao.PLAYER1[1] == 15:
-        VIDA_P1 = TelaSelecao.PLAYER1[1] * 4
-    if TelaSelecao.PLAYER1[1] == 20:
-        VIDA_P1 = TelaSelecao.PLAYER1[1] * 3
-    if TelaSelecao2.PLAYER2[1] == 12:
-        VIDA_P2 = TelaSelecao2.PLAYER2[1] * 5
-    if TelaSelecao2.PLAYER2[1] == 15:
-        VIDA_P2 = TelaSelecao2.PLAYER2[1] * 4
-    if TelaSelecao2.PLAYER2[1] == 20:
-        VIDA_P2 = TelaSelecao2.PLAYER2[1] * 3
+    # PARA FAZER COM QUE A BARRA DE VIDA DO P1 FIQUE PROPORCIONAL
+    x = int(60 / TelaSelecao.PLAYER1[1])
+    VIDA_P1 = int(TelaSelecao.PLAYER1[1] * x)
+
+    # PARA FAZER COM QUE A BARRA DE VIDA DO P2 FIQUE PROPORCIONAL
+    y = int(60 / TelaSelecao2.PLAYER2[1])
+    VIDA_P2 = int(TelaSelecao2.PLAYER2[1] * y)

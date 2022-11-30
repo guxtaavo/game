@@ -59,6 +59,7 @@ class Tela_Jogo:
         self.tela = tela
         self.imagem = pg.image.load(imagem)
         img = self.imagem
+        
         self.vida = Vida(ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
         self.velocidade = velocidade
         self.ataque_dist = ataque_dist
@@ -70,8 +71,8 @@ class Tela_Jogo:
         self.pos_atual_yp1 = 0
         self.balas_p1 = []
         self.ultimo_disparo_p1 = None
-        #def __init__ (self, dano, player, x, y)
-        self.ataque_p1 = self.Curta_Distancia(3, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+        self.ataque_melee = ataque_melee
+        self.ataque_p1 = self.Curta_Distancia(ataque_melee, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
        
 
         #CRIANDO O SEGUNDO JOGADOR
@@ -85,14 +86,14 @@ class Tela_Jogo:
         self.largura_imagem2 = img2.get_rect().width
         self.altura_imagem2 = img2.get_rect().height
         self.rect2 = img2.get_rect()
-        self.pos_atual_xp2 = 0
-        self.pos_atual_yp2 = 0
+  
 
 
         self.balas_p2 = []
         self.ultimo_disparo_p2 = None
+        self.ataque_melee2 = ataque_melee2
 
-        self.ataque_p2 = self.Curta_Distancia(3, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+        self.ataque_p2 = self.Curta_Distancia(ataque_melee2, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
         
     
         self.cenario = Cenario(ConfiJogo.TAMANHO_BLOCO, self.tela)
@@ -311,16 +312,11 @@ class Tela_Jogo:
             if pg.key.get_pressed()[pg.K_e]:
                 self.distanciap1p2 = math.sqrt(math.pow((ConfiJogo.P1_POSICAO_X - ConfiJogo.P2_POSICAO_X), 2)+math.pow((ConfiJogo.P1_POSICAO_Y - ConfiJogo.P2_POSICAO_Y), 2))
                 if self.distanciap1p2 < 60:
-                    ConfiJogo.VIDA_P2 -= 2
+                    ConfiJogo.VIDA_P2 -= self.dano
 
 
         def ataque_p2(self):  #alvo #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
             if pg.key.get_pressed()[pg.K_p]:
                 self.distanciap2p1 = math.sqrt(math.pow((ConfiJogo.P2_POSICAO_X - ConfiJogo.P1_POSICAO_X), 2)+math.pow((ConfiJogo.P2_POSICAO_Y - ConfiJogo.P1_POSICAO_Y), 2))
                 if self.distanciap2p1 < 60:
-                    ConfiJogo.VIDA_P1 -= 2
-                        
-                
-
-        
-    
+                    ConfiJogo.VIDA_P1 -= self.dano

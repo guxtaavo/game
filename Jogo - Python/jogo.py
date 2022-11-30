@@ -7,7 +7,6 @@ from tela_inicial import Menu
 from tela_jogo import Tela_Jogo
 from personagens import Personagens
 from tela_historia import Tela_Historia
-from tela_historia2 import Tela_Historia_2
 from tela_vencedor import Tela_Vencedor
 
 class Jogo:
@@ -44,13 +43,9 @@ class Jogo:
         menu = Menu(self.tela)
         menu.rodar()
 
-        # MOSTRA A TELA DE HISTORIA 1
+        # MOSTRA A TELA DE HISTORIA
         tela_historia = Tela_Historia(self.tela)
         tela_historia.rodar()
-
-        # MOSTRA A TELA DE HISTORIA 2
-        tela_historia2 = Tela_Historia_2(self.tela)
-        tela_historia2.rodar()
 
         while True:
             pg.mixer.music.set_volume(0.008)
@@ -65,6 +60,12 @@ class Jogo:
             # RECEBE OS PERSONAGENS ESCOLHIDOS PELOS JOGADORES
             p1 = TelaSelecao.PLAYER1
             p2 = TelaSelecao2.PLAYER2
+            
+            x = 60 / p1[1]
+            y = 60 / p2[1]
+
+            ConfiJogo.VIDA_P1 = p1[1] * x
+            ConfiJogo.VIDA_P2 = p2[1] * y
 
             # RECEBE OS JOGADORES E PASSA PARA O JOGO OS ATRIBUTOS DO PERSONAGENS
             # EX.: IMG, VIDA, VELOCIDADE...
@@ -75,5 +76,11 @@ class Jogo:
 
             tela_vencedor = Tela_Vencedor(self.tela)
             tela_vencedor.rodar()
+
+            ConfiJogo.P1_POSICAO_X = 100
+            ConfiJogo.P1_POSICAO_X = 100
+            ConfiJogo.P1_POSICAO_Y = 100
+            ConfiJogo.P2_POSICAO_X = 400
+            ConfiJogo.P2_POSICAO_Y = 400
             
     
