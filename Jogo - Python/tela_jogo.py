@@ -3,11 +3,90 @@ import sys
 from configjogo import ConfiJogo
 from vida_jogador import Vida
 from cronometro import Cronometro
-from cenario import Cenario
+# from cenario import Cenario
 import math
 
 class Tela_Jogo:
-    Mapa =  [
+    def __init__(self, tela, imagem, vida, velocidade, ataque_dist, ataque_melee, tela2, imagem2, vida2, velocidade2, ataque_dist2, \
+        ataque_melee2, tela3, imagem3, vida3, velocidade3, ataque_dist3, ataque_melee3):
+        self.relogio = pg.time.Clock()
+        self.esta_rodando = True
+        self.font_timer = pg.font.SysFont("sigmar one", 54)
+
+
+        #CRIANDO PRIMEIRO JOGADOR
+        self.tela = tela
+        self.imagem = pg.image.load(imagem)
+        img = self.imagem
+        
+        self.vida = Vida(ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+        self.velocidade = velocidade
+        self.ataque_dist = ataque_dist
+        self.ataque_melee = ataque_melee
+        self.largura_imagem = img.get_rect().width
+        ConfiJogo.LARGURA_P1 = self.largura_imagem
+        self.altura_imagem = img.get_rect().height
+        ConfiJogo.ALTURA_P1 = self.altura_imagem
+        self.rect1 = img.get_rect()
+        self.pos_atual_xp1 = 0
+        self.pos_atual_yp1 = 0
+        self.balas_p1 = []
+        self.ultimo_disparo_p1 = None
+        self.ataque_melee = ataque_melee
+        self.ataque_p1 = self.Curta_Distancia(ataque_melee, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+       
+
+        #CRIANDO O SEGUNDO JOGADOR
+        self.tela2 = tela2
+        self.imagem2 = pg.image.load(imagem2)
+        img2 = self.imagem2
+        self.vida2 = Vida(ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
+        self.velocidade2 = velocidade2
+        self.ataque_dist2 = ataque_dist2
+        self.ataque_melee2 = ataque_melee2
+        self.largura_imagem2 = img2.get_rect().width
+        ConfiJogo.LARGURA_P2 = self.largura_imagem2
+        self.altura_imagem2 = img2.get_rect().height
+        ConfiJogo.ALTURA_P2 = self.altura_imagem2
+        self.rect2 = img2.get_rect()
+  
+
+        #CRIANDO O MINION
+        self.tela3 = tela3
+        self.imagem3 = pg.image.load(imagem3)
+        img3 = self.imagem3
+        self.vida3 = Vida(ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y)
+        self.velocidade3 = velocidade3
+        self.ataque_dist3 = ataque_dist3
+        self.ataque_melee3 = ataque_melee3
+        self.largura_imagem3 = img3.get_rect().width
+        ConfiJogo.LARGURA_P3 = self.largura_imagem3
+        self.altura_imagem3 = img3.get_rect().height
+        ConfiJogo.ALTURA_P3 = self.altura_imagem3
+        self.rect3 = img3.get_rect()
+
+
+        #CONFIG PARA O ATAQUE A DISTANCIA
+        self.balas_p2 = []
+        self.ultimo_disparo_p2 = None
+        self.balas_p1 = []
+        self.ultimo_disparo_p1 = None
+
+
+
+        #CONFIG PARA O ATAQUE CORPO A CORPO
+        self.ataque_melee2 = ataque_melee2
+        self.ataque_p2 = self.Curta_Distancia(ataque_melee2, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+        self.ataque_melee = ataque_melee
+        self.ataque_p1 = self.Curta_Distancia(ataque_melee, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+        
+        # UTILIZADO PARA FAZER O CRONOMETRO DO JOGO
+        self.cronometro = Cronometro()
+
+        #UTILIZADO PARA FAZER O MAPA DO JOGO
+        self.tamanho_bloco = ConfiJogo.TAMANHO_BLOCO
+        self.cenario = (ConfiJogo.TAMANHO_BLOCO, self.tela)
+        self.matriz = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -48,65 +127,31 @@ class Tela_Jogo:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
 
-    def __init__(self, tela, imagem, vida, velocidade, ataque_dist, ataque_melee, tela2, imagem2, vida2, velocidade2, ataque_dist2, \
-        ataque_melee2):
-        self.relogio = pg.time.Clock()
-        self.esta_rodando = True
-        self.font_timer = pg.font.SysFont("sigmar one", 54)
+    #FUNÇÃO PARA PINTAR O FUNDO DA TELA DO JOGO DE ACORDO COM A MATRIZ
+    def pintar_cenario(self, tela):
+        for linha in range (len(self.matriz)):
+            for coluna in range (len(self.matriz[linha])):
+                px = coluna * self.tamanho_bloco
+                py = linha * self.tamanho_bloco
 
+                if self.matriz[linha][coluna] == 0:
+                    img = ConfiJogo.IMAGEM_GRAMA
+                elif self.matriz[linha][coluna] == 1:
+                    img = ConfiJogo.IMAGEM_PEDRA
+                elif self.matriz[linha][coluna] == 2:
+                    img = ConfiJogo.IMAGEM_MADEIRA
+                elif self.matriz[linha][coluna] == 3:
+                    img = ConfiJogo.IMAGEM_AGUA
+                
 
-        #CRIANDO PRIMEIRO JOGADOR
-        self.tela = tela
-        self.imagem = pg.image.load(imagem)
-        img = self.imagem
-        
-        self.vida = Vida(ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
-        self.velocidade = velocidade
-        self.ataque_dist = ataque_dist
-        self.ataque_melee = ataque_melee
-        self.largura_imagem = img.get_rect().width
-        self.altura_imagem = img.get_rect().height
-        self.rect1 = img.get_rect()
-        self.pos_atual_xp1 = 0
-        self.pos_atual_yp1 = 0
-        self.balas_p1 = []
-        self.ultimo_disparo_p1 = None
-        self.ataque_melee = ataque_melee
-        self.ataque_p1 = self.Curta_Distancia(ataque_melee, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
-       
-
-        #CRIANDO O SEGUNDO JOGADOR
-        self.tela2 = tela2
-        self.imagem2 = pg.image.load(imagem2)
-        img2 = self.imagem2
-        self.vida2 = Vida(ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
-        self.velocidade2 = velocidade2
-        self.ataque_dist2 = ataque_dist2
-        self.ataque_melee2 = ataque_melee2
-        self.largura_imagem2 = img2.get_rect().width
-        self.altura_imagem2 = img2.get_rect().height
-        self.rect2 = img2.get_rect()
-  
-
-
-        self.balas_p2 = []
-        self.ultimo_disparo_p2 = None
-        self.ataque_melee2 = ataque_melee2
-
-        self.ataque_p2 = self.Curta_Distancia(ataque_melee2, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
-        
-    
-        self.cenario = Cenario(ConfiJogo.TAMANHO_BLOCO, self.tela)
-
-
-        self.cronometro = Cronometro()
+                tela.blit(img, (px, py, self.tamanho_bloco, self.tamanho_bloco))
     
 
 
     def rodar(self):
             while self.esta_rodando:
                 self.tela.fill(ConfiJogo.BRANCO)
-                self.cenario.pintar(self.tela)
+                self.pintar_cenario(self.tela)
                 self.desenha()
                 self.tratamento_de_eventos()
                 self.Tiro.movimenta_disparo_p1(self)
@@ -118,6 +163,8 @@ class Tela_Jogo:
         self.coloca_imagem_tela(self.tela)
         self.vida.desenha_vida(self.tela)
         self.vida2.desenha_vida(self.tela)
+        if ConfiJogo.VIDA_MINION > 0:
+            self.vida3.desenha_vida(self.tela)
         self.desenha_balas_p1()
         pg.display.flip()
 
@@ -125,7 +172,6 @@ class Tela_Jogo:
     def desenha_balas_p1(self):
         for disparos in self.balas_p1:
             pg.draw.rect(self.tela, ((0,0,0)), (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y, 10, 10))    
-
 
 
     def jogo_terminou(self):
@@ -147,6 +193,9 @@ class Tela_Jogo:
     def coloca_imagem_tela(self, tela):
         self.rect1 = tela.blit(self.imagem, (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y))
         self.rect2 = tela.blit(self.imagem2, (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y))
+        if ConfiJogo.VIDA_MINION > 0:
+            self.rect3 = tela.blit(self.imagem3, (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y))
+        
 
         # CONFG PASSADAS PARA O CRONOMETRO IR ABAIXANDO E DEFINIÇÕES DE POSICIONAMENTO
         tempo = ConfiJogo.DURACAO_PARTIDA - self.cronometro.tempo_passado()
@@ -161,7 +210,7 @@ class Tela_Jogo:
         self.relogio.tick(60)
 
         for event in pg.event.get():
-        
+            
             #PARA SAIR DO JOGO
             if pg.key.get_pressed()[pg.K_ESCAPE] or event.type == pg.QUIT:
                 sys.exit()
@@ -171,21 +220,47 @@ class Tela_Jogo:
             if self.jogo_terminou() == True:
                 self.esta_rodando = False
 
+        
+            d1 = int(math.sqrt((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P1_POSICAO_X)**2 + (ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P1_POSICAO_Y)**2))
+            d2 = int(math.sqrt((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P2_POSICAO_X)**2 + (ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P2_POSICAO_Y)**2))
+            if ConfiJogo.VIDA_MINION > 0:
+                if d1 > d2:
+                    if ConfiJogo.P1_POSICAO_X > ConfiJogo.MINION_POSICAO_X:
+                        ConfiJogo.MINION_POSICAO_X += self.velocidade3
+                    elif ConfiJogo.P1_POSICAO_X < ConfiJogo.MINION_POSICAO_X:
+                        ConfiJogo.MINION_POSICAO_X -= self.velocidade3
+                    if ConfiJogo.P1_POSICAO_Y > ConfiJogo.MINION_POSICAO_Y:
+                        ConfiJogo.MINION_POSICAO_Y += self.velocidade3
+                    elif ConfiJogo.P1_POSICAO_Y < ConfiJogo.MINION_POSICAO_Y:
+                        ConfiJogo.MINION_POSICAO_Y -= self.velocidade3
+                else:
+                    if ConfiJogo.P2_POSICAO_X > ConfiJogo.MINION_POSICAO_X:
+                        ConfiJogo.MINION_POSICAO_X += self.velocidade3
+                    elif ConfiJogo.P2_POSICAO_X < ConfiJogo.MINION_POSICAO_X:
+                        ConfiJogo.MINION_POSICAO_X -= self.velocidade3
+                    if ConfiJogo.P2_POSICAO_Y > ConfiJogo.MINION_POSICAO_Y:
+                        ConfiJogo.MINION_POSICAO_Y += self.velocidade3
+                    elif ConfiJogo.P2_POSICAO_Y < ConfiJogo.MINION_POSICAO_Y:
+                        ConfiJogo.MINION_POSICAO_Y -= self.velocidade3
 
-            self.ataque_p1.ataque_p1()
+            self.ataque_p1.ataque_p1(self.tela)
             # PARA MOVIMENTAR O JOGADOR 1
             if pg.key.get_pressed()[pg.K_w]:
                 # VERFICA SE O JOGADOR 1 NAO VAI SOBREPOR O JOGADOR 2
                 if not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X >= ConfiJogo.P2_POSICAO_X and \
                 ConfiJogo.P1_POSICAO_X <= ConfiJogo.P2_POSICAO_X + self.largura_imagem2) and \
                 (ConfiJogo.P1_POSICAO_Y - self.velocidade >= ConfiJogo.P2_POSICAO_Y and \
-                ConfiJogo.P1_POSICAO_Y - self.velocidade <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)):
+                ConfiJogo.P1_POSICAO_Y - self.velocidade <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)) and not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X + self.velocidade >= ConfiJogo.MINION_POSICAO_X and \
+                ConfiJogo.P1_POSICAO_X + self.velocidade <= ConfiJogo.MINION_POSICAO_X + self.largura_imagem3) and \
+                (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.MINION_POSICAO_Y and \
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.MINION_POSICAO_Y + self.altura_imagem3)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                    if not ((Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y - self.velocidade)//38][ConfiJogo.P1_POSICAO_X//50] == 1) or \
-                        (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y - self.velocidade)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 1) or \
-                        (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y - self.velocidade + self.altura_imagem)//38][ConfiJogo.P1_POSICAO_X//50] == 1) or \
-                        (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y - self.velocidade + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 1)):
+                    if not ((self.matriz[(ConfiJogo.P1_POSICAO_Y - self.velocidade)//38][ConfiJogo.P1_POSICAO_X//50] == 2) or \
+                        (self.matriz[(ConfiJogo.P1_POSICAO_Y - self.velocidade)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 2) or \
+                        (self.matriz[(ConfiJogo.P1_POSICAO_Y - self.velocidade + self.altura_imagem)//38][ConfiJogo.P1_POSICAO_X//50] == 2) or \
+                        (self.matriz[(ConfiJogo.P1_POSICAO_Y - self.velocidade + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 2)) or not ((ConfiJogo.P1_POSICAO_X - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_X + self.largura_imagem + self.velocidade < ConfiJogo.LARGURA - self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y + self.altura_imagem + self.tamanho_bloco < ConfiJogo.ALTURA - self.tamanho_bloco)):
                             ConfiJogo.P1_POSICAO_Y -= self.velocidade
+                            ConfiJogo.ULTIMO_PASSO_P1 = "NORTE"
                              
                             
                 
@@ -193,48 +268,59 @@ class Tela_Jogo:
                 if not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X >= ConfiJogo.P2_POSICAO_X and \
                 ConfiJogo.P1_POSICAO_X <= ConfiJogo.P2_POSICAO_X + self.largura_imagem2) and \
                 (ConfiJogo.P1_POSICAO_Y + self.velocidade + self.altura_imagem >= ConfiJogo.P2_POSICAO_Y and \
-                ConfiJogo.P1_POSICAO_Y + self.velocidade <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)):
+                ConfiJogo.P1_POSICAO_Y + self.velocidade <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)) and not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X + self.velocidade >= ConfiJogo.MINION_POSICAO_X and \
+                ConfiJogo.P1_POSICAO_X + self.velocidade <= ConfiJogo.MINION_POSICAO_X + self.largura_imagem3) and \
+                (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.MINION_POSICAO_Y and \
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.MINION_POSICAO_Y + self.altura_imagem3)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                    if not ((Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.velocidade)//38][ConfiJogo.P1_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.velocidade)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.velocidade + self.altura_imagem)//38][ConfiJogo.P1_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.velocidade + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 1)):
+                    if not ((self.matriz[(ConfiJogo.P1_POSICAO_Y + self.velocidade)//38][ConfiJogo.P1_POSICAO_X//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.velocidade)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.velocidade + self.altura_imagem)//38][ConfiJogo.P1_POSICAO_X//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.velocidade + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem)//50] == 2)) or not ((ConfiJogo.P1_POSICAO_X - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_X + self.largura_imagem + self.velocidade < ConfiJogo.LARGURA - self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y + self.altura_imagem + self.tamanho_bloco < ConfiJogo.ALTURA - self.tamanho_bloco)):
                         ConfiJogo.P1_POSICAO_Y += self.velocidade
+                        ConfiJogo.ULTIMO_PASSO_P1 = "SUL"
                         
 
             if pg.key.get_pressed()[pg.K_d]:
                 if not ((self.largura_imagem + self.velocidade + ConfiJogo.P1_POSICAO_X >= ConfiJogo.P2_POSICAO_X and \
                 ConfiJogo.P1_POSICAO_X + self.velocidade <= ConfiJogo.P2_POSICAO_X + self.largura_imagem2) and \
                 (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.P2_POSICAO_Y and \
-                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)):
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)) and not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X + self.velocidade >= ConfiJogo.MINION_POSICAO_X and \
+                ConfiJogo.P1_POSICAO_X + self.velocidade <= ConfiJogo.MINION_POSICAO_X + self.largura_imagem3) and \
+                (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.MINION_POSICAO_Y and \
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.MINION_POSICAO_Y + self.altura_imagem3)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                     if not ((Tela_Jogo.Mapa[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.velocidade)//50] == 1) or \
-                    (Tela_Jogo.Mapa[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.velocidade + self.largura_imagem)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.velocidade)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.velocidade + self.largura_imagem)//50] == 1)):
+                     if not ((self.matriz[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.velocidade)//50] == 2) or \
+                    (self.matriz[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.velocidade + self.largura_imagem)//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.velocidade)//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.velocidade + self.largura_imagem)//50] == 2)) or not ((ConfiJogo.P1_POSICAO_X - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_X + self.largura_imagem + self.velocidade < ConfiJogo.LARGURA - self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y + self.altura_imagem + self.tamanho_bloco < ConfiJogo.ALTURA - self.tamanho_bloco)):
                         ConfiJogo.P1_POSICAO_X += self.velocidade
+                        ConfiJogo.ULTIMO_PASSO_P1 = "LESTE"
                         
 
             if pg.key.get_pressed()[pg.K_a]:
                 if not ((self.largura_imagem - self.velocidade + ConfiJogo.P1_POSICAO_X >= ConfiJogo.P2_POSICAO_X and \
                 ConfiJogo.P1_POSICAO_X - self.velocidade <= ConfiJogo.P2_POSICAO_X + self.largura_imagem2) and \
                 (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.P2_POSICAO_Y and \
-                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)):
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)) and not ((self.largura_imagem + ConfiJogo.P1_POSICAO_X + self.velocidade >= ConfiJogo.MINION_POSICAO_X and \
+                ConfiJogo.P1_POSICAO_X + self.velocidade <= ConfiJogo.MINION_POSICAO_X + self.largura_imagem3) and \
+                (ConfiJogo.P1_POSICAO_Y + self.altura_imagem >= ConfiJogo.MINION_POSICAO_Y and \
+                ConfiJogo.P1_POSICAO_Y <= ConfiJogo.MINION_POSICAO_Y + self.altura_imagem3)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                     if not ((Tela_Jogo.Mapa[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X - self.velocidade)//50] == 1) or \
-                    (Tela_Jogo.Mapa[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem - self.velocidade)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X - self.velocidade)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem - self.velocidade)//50] == 1)):
+                     if not ((self.matriz[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X - self.velocidade)//50] == 2) or \
+                    (self.matriz[ConfiJogo.P1_POSICAO_Y//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem - self.velocidade)//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X - self.velocidade)//50] == 2) or \
+                    (self.matriz[(ConfiJogo.P1_POSICAO_Y + self.altura_imagem)//38][(ConfiJogo.P1_POSICAO_X + self.largura_imagem - self.velocidade)//50] == 2)) or not ((ConfiJogo.P1_POSICAO_X - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y - self.velocidade > self.tamanho_bloco and ConfiJogo.P1_POSICAO_X + self.largura_imagem + self.velocidade < ConfiJogo.LARGURA - self.tamanho_bloco and ConfiJogo.P1_POSICAO_Y + self.altura_imagem + self.tamanho_bloco < ConfiJogo.ALTURA - self.tamanho_bloco)):
                         ConfiJogo.P1_POSICAO_X -= self.velocidade
+                        ConfiJogo.ULTIMO_PASSO_P1 = "OESTE"
                          
 
             if pg.key.get_pressed()[pg.K_f]:   #necessário checar  o tempo.
                 Tela_Jogo.disparo_p1(self, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y, 5)           
 
+            print(ConfiJogo.ULTIMO_PASSO_P1)
 
-
-            self.ataque_p2.ataque_p2()
-           
+            self.ataque_p2.ataque_p2(self.tela2)
             # PARA MOVIMENTAR O JOGADOR 2
             if pg.key.get_pressed()[pg.K_i]:
                 # VERIFICA SE O PERSONAGEM 2 NAO VAI SOBREPOR O PERSONAGEM 1
@@ -243,11 +329,12 @@ class Tela_Jogo:
                 (ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2 >= ConfiJogo.P1_POSICAO_Y and \
                 ConfiJogo.P2_POSICAO_Y - self.velocidade2 <= ConfiJogo.P1_POSICAO_Y + self.altura_imagem)):
                     #  VERIFICA SE O PERSONAGEM 2 NAO VAI SE COLIDIR COM ALGUM BLOCO DELIMITANTE
-                    if not ((Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1)):
+                    if not ((self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1)):
                         ConfiJogo.P2_POSICAO_Y -= self.velocidade2
+                        ConfiJogo.ULTIMO_PASSO_P2 = "NORTE"
                     
             if pg.key.get_pressed()[pg.K_k]:     
                 if not ((self.largura_imagem2 + ConfiJogo.P2_POSICAO_X >= ConfiJogo.P1_POSICAO_X and \
@@ -255,11 +342,12 @@ class Tela_Jogo:
                 (ConfiJogo.P2_POSICAO_Y + self.velocidade2 + self.altura_imagem2 >= ConfiJogo.P1_POSICAO_Y and \
                 ConfiJogo.P2_POSICAO_Y + self.velocidade2 <= ConfiJogo.P1_POSICAO_Y + self.altura_imagem)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                    if not ((Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.velocidade2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.velocidade2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.velocidade2 + self.altura_imagem2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.velocidade2 + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1)):
+                    if not ((self.matriz[(ConfiJogo.P2_POSICAO_Y + self.velocidade2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.velocidade2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.velocidade2 + self.altura_imagem2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.velocidade2 + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1)):
                         ConfiJogo.P2_POSICAO_Y += self.velocidade2
+                        ConfiJogo.ULTIMO_PASSO_P2 = "SUL"
 
             if pg.key.get_pressed()[pg.K_l]:
                 if not ((self.largura_imagem2 + self.velocidade2 + ConfiJogo.P2_POSICAO_X >= ConfiJogo.P1_POSICAO_X and \
@@ -267,11 +355,12 @@ class Tela_Jogo:
                 (ConfiJogo.P2_POSICAO_Y + self.altura_imagem2 >= ConfiJogo.P1_POSICAO_Y and \
                 ConfiJogo.P2_POSICAO_Y <= ConfiJogo.P1_POSICAO_Y + self.altura_imagem)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                    if not ((Tela_Jogo.Mapa[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2 + self.largura_imagem2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2 + self.largura_imagem2)//50] == 1)):
+                    if not ((self.matriz[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2)//50] == 1) or \
+                    (self.matriz[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2 + self.largura_imagem2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.velocidade2 + self.largura_imagem2)//50] == 1)):
                         ConfiJogo.P2_POSICAO_X += self.velocidade2
+                        ConfiJogo.ULTIMO_PASSO_P2 = "LESTE"
 
             if pg.key.get_pressed()[pg.K_j]:
                 if not ((self.largura_imagem2 - self.velocidade2 + ConfiJogo.P2_POSICAO_X >= ConfiJogo.P1_POSICAO_X and \
@@ -279,11 +368,12 @@ class Tela_Jogo:
                 (ConfiJogo.P2_POSICAO_Y + self.altura_imagem2 >= ConfiJogo.P1_POSICAO_Y and \
                 ConfiJogo.P2_POSICAO_Y <= ConfiJogo.P1_POSICAO_Y + self.altura_imagem)):
                     # DELIMITAR A MOVIMENTAÇÃO DO PERSONAGEM ATÉ O BLOCO PEDRA
-                    if not ((Tela_Jogo.Mapa[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2 + self.largura_imagem2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2)//50] == 1) or \
-                    (Tela_Jogo.Mapa[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2 + self.largura_imagem2)//50] == 1)):
+                    if not ((self.matriz[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2)//50] == 1) or \
+                    (self.matriz[ConfiJogo.P2_POSICAO_Y//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2 + self.largura_imagem2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2)//50] == 1) or \
+                    (self.matriz[(ConfiJogo.P2_POSICAO_Y + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X - self.velocidade2 + self.largura_imagem2)//50] == 1)):
                         ConfiJogo.P2_POSICAO_X -= self.velocidade2
+                        ConfiJogo.ULTIMO_PASSO_P2 = "OESTE"
 
             pg.display.flip()
 
@@ -308,15 +398,39 @@ class Tela_Jogo:
             self.y = y
 
 
-        def ataque_p1(self): #alvo  #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
+        def ataque_p1(self, tela): #alvo  #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
+            self.tela = tela
             if pg.key.get_pressed()[pg.K_e]:
                 self.distanciap1p2 = math.sqrt(math.pow((ConfiJogo.P1_POSICAO_X - ConfiJogo.P2_POSICAO_X), 2)+math.pow((ConfiJogo.P1_POSICAO_Y - ConfiJogo.P2_POSICAO_Y), 2))
+                self.distanciap1minion = math.sqrt(math.pow((ConfiJogo.P1_POSICAO_X - ConfiJogo.MINION_POSICAO_X), 2)+math.pow((ConfiJogo.P1_POSICAO_Y - ConfiJogo.MINION_POSICAO_Y), 2))
                 if self.distanciap1p2 < 60:
                     ConfiJogo.VIDA_P2 -= self.dano
+                    if ConfiJogo.ULTIMO_PASSO_P1 == "NORTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P1_POSICAO_X+(ConfiJogo.LARGURA_P1/2)), (ConfiJogo.P1_POSICAO_Y)])
+                    if ConfiJogo.ULTIMO_PASSO_P1 == "SUL":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P1_POSICAO_X+(ConfiJogo.LARGURA_P1/2)), (ConfiJogo.P1_POSICAO_Y + ConfiJogo.ALTURA_P1)])
+                    if ConfiJogo.ULTIMO_PASSO_P1 == "LESTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P1_POSICAO_X+(ConfiJogo.LARGURA_P1)), (ConfiJogo.P1_POSICAO_Y/2)])
+                    if ConfiJogo.ULTIMO_PASSO_P1 == "OESTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P1_POSICAO_X), (ConfiJogo.P1_POSICAO_Y/2)])
+                elif self.distanciap1minion < 60:
+                    ConfiJogo.VIDA_MINION -= self.dano
 
 
-        def ataque_p2(self):  #alvo #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
+        def ataque_p2(self, tela):  #alvo #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
+            self.tela = tela
             if pg.key.get_pressed()[pg.K_p]:
                 self.distanciap2p1 = math.sqrt(math.pow((ConfiJogo.P2_POSICAO_X - ConfiJogo.P1_POSICAO_X), 2)+math.pow((ConfiJogo.P2_POSICAO_Y - ConfiJogo.P1_POSICAO_Y), 2))
+                self.distanciap2minion = math.sqrt(math.pow((ConfiJogo.P2_POSICAO_X - ConfiJogo.MINION_POSICAO_X), 2)+math.pow((ConfiJogo.P2_POSICAO_Y - ConfiJogo.MINION_POSICAO_Y), 2))
                 if self.distanciap2p1 < 60:
                     ConfiJogo.VIDA_P1 -= self.dano
+                    if ConfiJogo.ULTIMO_PASSO_P2 == "NORTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P2_POSICAO_X+(ConfiJogo.LARGURA_P2/2)), ConfiJogo.P2_POSICAO_Y])
+                    if ConfiJogo.ULTIMO_PASSO_P2 == "SUL":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P2_POSICAO_X+(ConfiJogo.LARGURA_P2/2)), ConfiJogo.P2_POSICAO_Y + ConfiJogo.ALTURA_P2])
+                    if ConfiJogo.ULTIMO_PASSO_P2 == "LESTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P2_POSICAO_X+(ConfiJogo.LARGURA_P2)), ConfiJogo.P2_POSICAO_Y/2])
+                    if ConfiJogo.ULTIMO_PASSO_P2 == "OESTE":
+                        pg.draw.rect(self.tela, (ConfiJogo.AZUL), [(ConfiJogo.P2_POSICAO_X), (ConfiJogo.P2_POSICAO_Y/2)])
+                elif self.distanciap2minion < 60:
+                    ConfiJogo.VIDA_MINION -= self.dano

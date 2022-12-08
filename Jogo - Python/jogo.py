@@ -16,7 +16,7 @@ class Jogo:
         #INICIALIZANDO PARA COLOCAR SOM
         pg.mixer.init()
         #INICIALIZANDO A TELA
-        self.tela = pg.display.set_mode((ConfiJogo.ALTURA, ConfiJogo.LARGURA))
+        self.tela = pg.display.set_mode((ConfiJogo.LARGURA, ConfiJogo.ALTURA))
         #DEFININDO O NOME QUE VAI NA ABA QUE VAI SER ABERTA
         #self.carregar_arquivos()
         pg.display.set_caption(ConfiJogo.TITULO_JOGO)
@@ -60,16 +60,20 @@ class Jogo:
             # RECEBE OS PERSONAGENS ESCOLHIDOS PELOS JOGADORES
             p1 = TelaSelecao.PLAYER1
             p2 = TelaSelecao2.PLAYER2
-            
+            minion = Personagens.GUERREIRO
+
             x = 60 / p1[1]
             y = 60 / p2[1]
+            z = 60 / minion[1]
 
             ConfiJogo.VIDA_P1 = p1[1] * x
             ConfiJogo.VIDA_P2 = p2[1] * y
+            ConfiJogo.VIDA_MINION = minion[1] * z
 
             # RECEBE OS JOGADORES E PASSA PARA O JOGO OS ATRIBUTOS DO PERSONAGENS
             # EX.: IMG, VIDA, VELOCIDADE...
-            jogo = Tela_Jogo(self.tela, p1[0], p1[1], p1[2], p1[3], p1[4], self.tela, p2[0], p2[1], p2[2], p2[3], p2[4])
+            jogo = Tela_Jogo(self.tela, p1[0], p1[1], p1[2], p1[3], p1[4], self.tela, p2[0], p2[1], p2[2], p2[3], p2[4], \
+                self.tela, minion[0], minion[1], minion[2], minion[3], minion[4])
             jogo.rodar()
             
             pg.mixer.music.set_volume(0)
