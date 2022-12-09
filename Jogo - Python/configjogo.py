@@ -53,3 +53,6 @@ class ConfiJogo:
     ALTURA_P3 = 0
     
     VIDA_BLOCO_MADEIRA = 10
+
+    VELOCIDADE_P1 = 0
+    VELOCIDADE_P2 = 0
