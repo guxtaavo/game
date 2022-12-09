@@ -34,7 +34,8 @@ class Tela_Jogo:
         self.ultimo_disparo_p1 = None
         self.ataque_melee = ataque_melee
         self.ataque_p1 = self.Curta_Distancia(ataque_melee, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
-       
+        retangulo_p1 = pg.Rect(ConfiJogo.P1_POSICAO_X + self.velocidade, ConfiJogo.ALTURA_P1 + self.velocidade, self.largura_imagem, self.altura_imagem)
+
 
         #CRIANDO O SEGUNDO JOGADOR
         self.tela2 = tela2
@@ -49,9 +50,10 @@ class Tela_Jogo:
         self.altura_imagem2 = img2.get_rect().height
         ConfiJogo.ALTURA_P2 = self.altura_imagem2
         self.rect2 = img2.get_rect()
+        retangulo_p2 = pg.Rect(ConfiJogo.P2_POSICAO_X + self.velocidade2, ConfiJogo.ALTURA_P2 + self.velocidade2, self.largura_imagem2, self.altura_imagem2)
   
 
-        #CRIANDO O MINION
+        #CRIANDO O MINION 
         self.tela3 = tela3
         self.imagem3 = pg.image.load(imagem3)
         img3 = self.imagem3
@@ -82,7 +84,6 @@ class Tela_Jogo:
 
         # UTILIZADO PARA FAZER O CRONOMETRO DO JOGO
         self.cronometro = Cronometro()
-
 
         #UTILIZADO PARA FAZER O MAPA DO JOGO
         self.tamanho_bloco = ConfiJogo.TAMANHO_BLOCO
@@ -143,11 +144,9 @@ class Tela_Jogo:
                     img = ConfiJogo.IMAGEM_MADEIRA
                 elif self.matriz[linha][coluna] == 3:
                     img = ConfiJogo.IMAGEM_AGUA
-                
+
 
                 tela.blit(img, (px, py, self.tamanho_bloco, self.tamanho_bloco))
-    
-
 
     def rodar(self):
             while self.esta_rodando:
@@ -169,6 +168,9 @@ class Tela_Jogo:
         self.desenha_balas_p1()
         pg.display.flip()
 
+
+    # def teste(self, rect):
+        
 
     def desenha_balas_p1(self):
         for disparos in self.balas_p1:
@@ -202,7 +204,6 @@ class Tela_Jogo:
         tempo = ConfiJogo.DURACAO_PARTIDA - self.cronometro.tempo_passado()
         timer = self.font_timer.render(f"{tempo:.0f}", True, ConfiJogo.PRETO)
         tela.blit(timer, (ConfiJogo.ALTURA//2 + 72, 20))
-
 
 
 
@@ -244,67 +245,119 @@ class Tela_Jogo:
                     elif ConfiJogo.P2_POSICAO_Y < ConfiJogo.MINION_POSICAO_Y:
                         ConfiJogo.MINION_POSICAO_Y -= self.velocidade3
 
+            
             self.ataque_p1.ataque_p1(self.tela)
-            # PARA MOVIMENTAR O JOGADOR 1
+            self.ataque_p2.ataque_p2(self.tela2)
+
+
+             # PARA MOVIMENTAR O JOGADOR 1
             if pg.key.get_pressed()[pg.K_w]:
+                x = ConfiJogo.P1_POSICAO_X
+                y = ConfiJogo.P1_POSICAO_Y
+                largura = self.largura_imagem
+                altura = self.altura_imagem
                 self.rect1_teste = pg.Rect(ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y-self.velocidade, self.largura_imagem, self.altura_imagem)
-                if self.rect1_teste.colliderect(self.rect2) == False:
+                if self.rect1_teste.colliderect(self.rect2) == False and not ((self.matriz[(y - self.velocidade)//16][x//16] == 1) or \
+                    (self.matriz[(y - self.velocidade)//16][(x + largura)//16] == 1) or \
+                    (self.matriz[(y - self.velocidade + altura)//16][x//16] == 1) or \
+                    (self.matriz[(y - self.velocidade + altura)//16][(x + largura)//16] == 1)):
                     ConfiJogo.P1_POSICAO_Y -= self.velocidade
                     ConfiJogo.ULTIMO_PASSO_P1 = "NORTE"
                 
             if pg.key.get_pressed()[pg.K_s]:
+                x = ConfiJogo.P1_POSICAO_X
+                y = ConfiJogo.P1_POSICAO_Y
+                largura = self.largura_imagem
+                altura = self.altura_imagem
                 self.rect1_teste = pg.Rect(ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y+self.velocidade, self.largura_imagem, self.altura_imagem)
-                if self.rect1_teste.colliderect(self.rect2) == False:
+                if self.rect1_teste.colliderect(self.rect2) == False and not ((self.matriz[(y + self.velocidade)//16][x//16] == 1) or \
+                    (self.matriz[(y + self.velocidade)//16][(x + largura)//16] == 1) or \
+                    (self.matriz[(y + self.velocidade + altura)//16][x//16] == 1) or \
+                    (self.matriz[(y + self.velocidade + altura)//16][(x + largura)//16] == 1)):
                     ConfiJogo.P1_POSICAO_Y += self.velocidade
                     ConfiJogo.ULTIMO_PASSO_P1 = "SUL"
                         
             if pg.key.get_pressed()[pg.K_d]:
+                x = ConfiJogo.P1_POSICAO_X
+                y = ConfiJogo.P1_POSICAO_Y
+                largura = self.largura_imagem
+                altura = self.altura_imagem
                 self.rect1_teste = pg.Rect(ConfiJogo.P1_POSICAO_X+self.velocidade, ConfiJogo.P1_POSICAO_Y, self.largura_imagem, self.altura_imagem)
-                if self.rect1_teste.colliderect(self.rect2) == False:
+                if self.rect1_teste.colliderect(self.rect2) == False and not((self.matriz[y//16][(x + self.velocidade)//16] == 1) or \
+                    (self.matriz[(y + largura)//16][(x + self.velocidade)//16] == 1) or \
+                    (self.matriz[y//16][(x + self.velocidade + largura)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x + self.velocidade + largura)//16] == 1)):
                     ConfiJogo.P1_POSICAO_X += self.velocidade
                     ConfiJogo.ULTIMO_PASSO_P1 = "LESTE"
                         
             if pg.key.get_pressed()[pg.K_a]:
+                x = ConfiJogo.P1_POSICAO_X
+                y = ConfiJogo.P1_POSICAO_Y
+                largura = self.largura_imagem
+                altura = self.altura_imagem
                 self.rect1_teste = pg.Rect(ConfiJogo.P1_POSICAO_X-self.velocidade, ConfiJogo.P1_POSICAO_Y, self.largura_imagem, self.altura_imagem)
-                if self.rect1_teste.colliderect(self.rect2) == False:
+                if self.rect1_teste.colliderect(self.rect2) == False and not ((self.matriz[y//16][(x- self.velocidade)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x - self.velocidade)//16] == 1) or \
+                    (self.matriz[y//16][(x - self.velocidade + largura)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x - self.velocidade + largura)//16] == 1)):
                     ConfiJogo.P1_POSICAO_X -= self.velocidade
                     ConfiJogo.ULTIMO_PASSO_P1 = "OESTE"
 
-
-
             if pg.key.get_pressed()[pg.K_f]:   #necessário checar  o tempo.
                 Tela_Jogo.disparo_p1(self, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y, 5)           
-
-            self.ataque_p2.ataque_p2(self.tela2)
+            
 
             # PARA MOVIMENTAR O JOGADOR 2
             if pg.key.get_pressed()[pg.K_i]:
-                # VERIFICA SE O PERSONAGEM 2 NAO VAI SOBREPOR O PERSONAGEM 1
+                x = ConfiJogo.P2_POSICAO_X
+                y = ConfiJogo.P2_POSICAO_Y
+                largura = self.largura_imagem2
+                altura = self.altura_imagem2
+                
                 self.rect2_teste = pg.Rect(ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y-self.velocidade2, self.largura_imagem2, self.altura_imagem2)
-                if self.rect2_teste.colliderect(self.rect1) == False:
+                if self.rect2_teste.colliderect(self.rect1) == False and not ((self.matriz[(y - self.velocidade2)//16][x//16] == 1) or \
+                    (self.matriz[(y - self.velocidade2)//16][(x + largura)//16] == 1) or \
+                    (self.matriz[(y - self.velocidade2 + altura)//16][x//16] == 1) or \
+                    (self.matriz[(y - self.velocidade2 + altura)//16][(x + largura)//16] == 1)):
                     ConfiJogo.P2_POSICAO_Y -= self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "NORTE"
-                    #  VERIFICA SE O PERSONAGEM 2 NAO VAI SE COLIDIR COM ALGUM BLOCO DELIMITANTE
-                    # if not ((self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    # (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1) or \
-                    # (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][ConfiJogo.P2_POSICAO_X//50] == 1) or \
-                    # (self.matriz[(ConfiJogo.P2_POSICAO_Y - self.velocidade2 + self.altura_imagem2)//38][(ConfiJogo.P2_POSICAO_X + self.largura_imagem2)//50] == 1)):
                     
-            if pg.key.get_pressed()[pg.K_k]:     
+            if pg.key.get_pressed()[pg.K_k]:
+                x = ConfiJogo.P2_POSICAO_X
+                y = ConfiJogo.P2_POSICAO_Y
+                largura = self.largura_imagem2
+                altura = self.altura_imagem2
                 self.rect2_teste = pg.Rect(ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y+self.velocidade2, self.largura_imagem2, self.altura_imagem2)
-                if self.rect2_teste.colliderect(self.rect1) == False:
+                if self.rect2_teste.colliderect(self.rect1) == False and not ((self.matriz[(y + self.velocidade2)//16][x//16] == 1) or \
+                    (self.matriz[(y + self.velocidade2)//16][(x + largura)//16] == 1) or \
+                    (self.matriz[(y + self.velocidade2 + altura)//16][x//16] == 1) or \
+                    (self.matriz[(y + self.velocidade2 + altura)//16][(x + largura)//16] == 1)):
                     ConfiJogo.P2_POSICAO_Y += self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "SUL"
 
             if pg.key.get_pressed()[pg.K_l]:
+                x = ConfiJogo.P2_POSICAO_X
+                y = ConfiJogo.P2_POSICAO_Y
+                largura = self.largura_imagem2
+                altura = self.altura_imagem2
                 self.rect2_teste = pg.Rect(ConfiJogo.P2_POSICAO_X+self.velocidade2, ConfiJogo.P2_POSICAO_Y, self.largura_imagem2, self.altura_imagem2)
-                if self.rect2_teste.colliderect(self.rect1) == False:
+                if self.rect2_teste.colliderect(self.rect1) == False and not((self.matriz[y//16][(x + self.velocidade2)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x + self.velocidade2)//16] == 1) or \
+                    (self.matriz[y//16][(x + self.velocidade2 + largura)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x + self.velocidade2 + largura)//16] == 1)):
                     ConfiJogo.P2_POSICAO_X += self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "LESTE"
 
             if pg.key.get_pressed()[pg.K_j]:
+                x = ConfiJogo.P2_POSICAO_X
+                y = ConfiJogo.P2_POSICAO_Y
+                largura = self.largura_imagem2
+                altura = self.altura_imagem2
                 self.rect2_teste = pg.Rect(ConfiJogo.P2_POSICAO_X-self.velocidade2, ConfiJogo.P2_POSICAO_Y, self.largura_imagem2, self.altura_imagem2)
-                if self.rect2_teste.colliderect(self.rect1) == False:
+                if self.rect2_teste.colliderect(self.rect1) == False and not ((self.matriz[y//16][(x- self.velocidade2)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x - self.velocidade2)//16] == 1) or \
+                    (self.matriz[y//16][(x - self.velocidade2 + largura)//16] == 1) or \
+                    (self.matriz[(y + altura)//16][(x - self.velocidade2 + largura)//16] == 1)):
                     ConfiJogo.P2_POSICAO_X -= self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "OESTE"
 
