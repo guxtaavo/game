@@ -42,3 +42,21 @@ class Curta_Distancia:
                 elif self.distanciap2minion < 60:
                     ConfiJogo.VIDA_MINION -= self.dano
                     pg.draw.rect(self.tela, ConfiJogo.PRETO, (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y, ConfiJogo.LARGURA_P2, ConfiJogo.ALTURA_P2))
+
+
+
+        def ataque_p3(self, tela):  #alvo #distancia 2p = sqrt((x-xo)^2+(y-yo)^2)
+            self.tela = tela
+            
+            if ConfiJogo.VIDA_MINION > 0:
+                self.distanciap3p1 = math.sqrt(math.pow((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P1_POSICAO_X), 2)+math.pow((ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P1_POSICAO_Y), 2))
+                
+                self.distanciap3p2= math.sqrt(math.pow((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P2_POSICAO_X), 2)+math.pow((ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P2_POSICAO_Y), 2))
+                
+                if self.distanciap3p1 < 60:
+                    ConfiJogo.VIDA_P1 -= self.dano
+                    pg.draw.rect(self.tela, ConfiJogo.PRETO, (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y, ConfiJogo.LARGURA_P3, ConfiJogo.ALTURA_P3))
+
+                elif self.distanciap3p2 < 60:
+                    ConfiJogo.VIDA_P2 -= self.dano
+                    pg.draw.rect(self.tela, ConfiJogo.PRETO, (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y, ConfiJogo.LARGURA_P3, ConfiJogo.ALTURA_P3))

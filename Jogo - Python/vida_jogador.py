@@ -23,7 +23,8 @@ class Vida:
         pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.P2_POSICAO_X-9 , (ConfiJogo.P2_POSICAO_Y-15), 61 , 11), 2)
 
         # VARIAVEL VIDA E VIDA2 TEM QUE COMEÇAR SENDO == A 60 E DESCRESCER DE ACORDO COM O DANO
-        pg.draw.rect(tela, ((255, 128, 126)), (ConfiJogo.MINION_POSICAO_X-14 , (ConfiJogo.MINION_POSICAO_Y-15), ConfiJogo.VIDA_MINION, 10))
-        pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.MINION_POSICAO_X-14 , (ConfiJogo.MINION_POSICAO_Y-15), 61 , 11), 2)
+        if ConfiJogo.VIDA_MINION > 0:
+            pg.draw.rect(tela, ((255, 128, 126)), (ConfiJogo.MINION_POSICAO_X-14 , (ConfiJogo.MINION_POSICAO_Y-15), ConfiJogo.VIDA_MINION, 10))
+            pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.MINION_POSICAO_X-14 , (ConfiJogo.MINION_POSICAO_Y-15), 61 , 11), 2)
 
-        pg.display.flip()
+            pg.display.flip()
