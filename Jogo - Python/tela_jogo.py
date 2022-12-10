@@ -147,7 +147,6 @@ class Tela_Jogo:
 
     def rodar(self):
             while self.esta_rodando:
-                self.tela.fill(ConfiJogo.BRANCO)
                 self.pintar_cenario(self.tela)
                 self.desenha()
                 self.tratamento_de_eventos()
@@ -162,25 +161,14 @@ class Tela_Jogo:
         self.vida2.desenha_vida(self.tela)
         if ConfiJogo.VIDA_MINION > 0:
             self.vida3.desenha_vida(self.tela)
-        self.desenha_balas_p1()
         pg.display.flip()
 
-
-    # def teste(self, rect):
-        
-
-    def desenha_balas_p1(self):
-        pass
 
     def jogo_terminou(self):
         if (self.cronometro.tempo_passado() > ConfiJogo.DURACAO_PARTIDA):
             return True
         else:
             return False
-    
-
-    def disparo_p1(self, x, y, dano):
-        pass
 
 
     # FUNÇÃO PARA DESENHAR OS PERSONAGENS NA TELA
@@ -228,7 +216,7 @@ class Tela_Jogo:
                         ConfiJogo.MINION_POSICAO_Y -= self.velocidade3
                 else:
                     if ConfiJogo.P2_POSICAO_X > ConfiJogo.MINION_POSICAO_X:
-                        ConfiJogo.MINION_POSICAO_X += self.velocidade3
+                           ConfiJogo.MINION_POSICAO_X += self.velocidade3
                     elif ConfiJogo.P2_POSICAO_X < ConfiJogo.MINION_POSICAO_X:
                         ConfiJogo.MINION_POSICAO_X -= self.velocidade3
                     if ConfiJogo.P2_POSICAO_Y > ConfiJogo.MINION_POSICAO_Y:
@@ -239,6 +227,7 @@ class Tela_Jogo:
             
             self.ataque_p1.ataque_p1(self.tela)
             self.ataque_p2.ataque_p2(self.tela2)
+            
 
             self.velocidade = ConfiJogo.VELOCIDADE_P1
             self.velocidade2 = ConfiJogo.VELOCIDADE_P2
@@ -255,7 +244,7 @@ class Tela_Jogo:
                     (self.matriz[(y - self.velocidade + altura)//16][x//16] == 3) or \
                     (self.matriz[(y - self.velocidade + altura)//16][(x + largura)//16] == 3)):
                     self.velocidade = 1
-                if self.rect1_teste.colliderect(self.rect2) == False and self.rect1.colliderect(self.rect3) == False\
+                if self.rect1_teste.colliderect(self.rect2) == False\
                     and not ((self.matriz[(y - self.velocidade)//16][x//16] == 1) or \
                     (self.matriz[(y - self.velocidade)//16][(x + largura)//16] == 1) or \
                     (self.matriz[(y - self.velocidade + altura)//16][x//16] == 1) or \
@@ -275,7 +264,7 @@ class Tela_Jogo:
                     (self.matriz[(y + self.velocidade + altura)//16][x//16] == 3) or \
                     (self.matriz[(y + self.velocidade + altura)//16][(x + largura)//16] == 3)):
                     self.velocidade = 1
-                if self.rect1_teste.colliderect(self.rect2) == False and self.rect1.colliderect(self.rect3) == False\
+                if self.rect1_teste.colliderect(self.rect2) == False\
                     and not ((self.matriz[(y + self.velocidade)//16][x//16] == 1) or \
                     (self.matriz[(y + self.velocidade)//16][(x + largura)//16] == 1) or \
                     (self.matriz[(y + self.velocidade + altura)//16][x//16] == 1) or \
@@ -295,7 +284,7 @@ class Tela_Jogo:
                     (self.matriz[y//16][(x + self.velocidade + largura)//16] == 3) or \
                     (self.matriz[(y + altura)//16][(x + self.velocidade + largura)//16] == 3)):
                     self.velocidade = 1
-                if self.rect1_teste.colliderect(self.rect2) == False and self.rect1.colliderect(self.rect3) == False\
+                if self.rect1_teste.colliderect(self.rect2) == False\
                     and not ((self.matriz[y//16][(x + self.velocidade)//16] == 1) or \
                     (self.matriz[(y + largura)//16][(x + self.velocidade)//16] == 1) or \
                     (self.matriz[y//16][(x + self.velocidade + largura)//16] == 1) or \
@@ -314,7 +303,7 @@ class Tela_Jogo:
                     (self.matriz[y//16][(x - self.velocidade + largura)//16] == 3) or \
                     (self.matriz[(y + altura)//16][(x - self.velocidade + largura)//16] == 3)):
                     self.velocidade = 1
-                if self.rect1_teste.colliderect(self.rect2) == False and self.rect1.colliderect(self.rect3) == False\
+                if self.rect1_teste.colliderect(self.rect2) == False\
                     and not ((self.matriz[y//16][(x- self.velocidade)//16] == 1) or \
                     (self.matriz[(y + altura)//16][(x - self.velocidade)//16] == 1) or \
                     (self.matriz[y//16][(x - self.velocidade + largura)//16] == 1) or \
@@ -339,7 +328,7 @@ class Tela_Jogo:
                     (self.matriz[(y - self.velocidade2 + altura)//16][x//16] == 3) or \
                     (self.matriz[(y - self.velocidade2 + altura)//16][(x + largura)//16] == 3)):
                     self.velocidade2 = 1
-                if self.rect2_teste.colliderect(self.rect1) == False and self.rect2_teste.colliderect(self.rect3) == False \
+                if self.rect2_teste.colliderect(self.rect1) == False\
                     and not ((self.matriz[(y - self.velocidade2)//16][x//16] == 1) or \
                     (self.matriz[(y - self.velocidade2)//16][(x + largura)//16] == 1) or \
                     (self.matriz[(y - self.velocidade2 + altura)//16][x//16] == 1) or \
@@ -358,7 +347,7 @@ class Tela_Jogo:
                     (self.matriz[(y + self.velocidade2 + altura)//16][x//16] == 3) or \
                     (self.matriz[(y + self.velocidade2 + altura)//16][(x + largura)//16] == 3)):
                     self.velocidade2 = 1
-                if self.rect2_teste.colliderect(self.rect1) == False and self.rect2_teste.colliderect(self.rect3) == False\
+                if self.rect2_teste.colliderect(self.rect1) == False\
                     and not ((self.matriz[(y + self.velocidade2)//16][x//16] == 1) or \
                     (self.matriz[(y + self.velocidade2)//16][(x + largura)//16] == 1) or \
                     (self.matriz[(y + self.velocidade2 + altura)//16][x//16] == 1) or \
@@ -377,7 +366,7 @@ class Tela_Jogo:
                     (self.matriz[y//16][(x + self.velocidade2 + largura)//16] == 3) or \
                     (self.matriz[(y + altura)//16][(x + self.velocidade2 + largura)//16] == 3)):
                     self.velocidade2 = 1
-                if self.rect2_teste.colliderect(self.rect1) == False and self.rect2_teste.colliderect(self.rect3) == False\
+                if self.rect2_teste.colliderect(self.rect1) == False\
                     and not((self.matriz[y//16][(x + self.velocidade2)//16] == 1) or \
                     (self.matriz[(y + altura)//16][(x + self.velocidade2)//16] == 1) or \
                     (self.matriz[y//16][(x + self.velocidade2 + largura)//16] == 1) or \
@@ -396,7 +385,7 @@ class Tela_Jogo:
                     (self.matriz[y//16][(x - self.velocidade2 + largura)//16] == 3) or \
                     (self.matriz[(y + altura)//16][(x - self.velocidade2 + largura)//16] == 3)):
                     self.velocidade2 = 1
-                if self.rect2_teste.colliderect(self.rect1) == False and self.rect2_teste.colliderect(self.rect3) == False\
+                if self.rect2_teste.colliderect(self.rect1) == False\
                     and not ((self.matriz[y//16][(x- self.velocidade2)//16] == 1) or \
                     (self.matriz[(y + altura)//16][(x - self.velocidade2)//16] == 1) or \
                     (self.matriz[y//16][(x - self.velocidade2 + largura)//16] == 1) or \
