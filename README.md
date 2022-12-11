@@ -13,8 +13,8 @@ Autores: Gustavo Nunes Lopes, Ryan Ferreira e Daruê Euzébio Fernandes.
 Depois de se certificar que você possui os requisitos minimos para a execução do jogo, abra a pasta "Jogo - Python" pelo VSCode, em seguida procure o arquivo "main.py" e logo em seguida você pode executar.
 
 <h3>Comandos:</h3>
-<p>O jogador 1 se move utilizando as teclas: 'WASD', ataca a curta distância utilizando o 'E', e ataca a longa distância com o 'F'.</p>
-<p>O jogador 2 se move utilizando as teclas: 'IJKL', ataca a curta distância utilizando o 'P', e ataca a longa distância como o ''.</p>
+<p>O jogador 1 se move utilizando as teclas: 'WASD', ataca a curta distância utilizando o 'E', ataca a longa distância com o 'F', ataca em área com o 'Z' e realiza auto-ação com o 'X'.</p>
+<p>O jogador 2 se move utilizando as teclas: 'IJKL', ataca a curta distância utilizando o 'P', ataca a longa distância como o '', ataca em área com o 'N' e realiza auto-ação com o 'M'.</p>
 
 <h5>Observação.:</h5>
 Não utilizar o mouse ou o touchpad durante a partida.
