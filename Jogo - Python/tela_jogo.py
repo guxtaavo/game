@@ -6,6 +6,8 @@ from cronometro import Cronometro
 from ataque_curta import Curta_Distancia
 import math
 from ataque_distancia import Tiro
+from ataque_em_area import Ataque_em_area
+from auto_ação import Auto_acao
 
 class Tela_Jogo:
     def __init__(self, tela, imagem, vida, velocidade, ataque_dist, ataque_melee, tela2, imagem2, vida2, velocidade2, ataque_dist2, \
@@ -37,6 +39,8 @@ class Tela_Jogo:
         self.balas_p1 = []
         self.ultimo_disparo_p1 = None
         self.ataque_melee = ataque_melee
+        self.ataque_area = Ataque_em_area(self.tela, self.rect1)
+        self.auto_acao = Auto_acao()
         
 
 
@@ -215,6 +219,7 @@ class Tela_Jogo:
             if ConfiJogo.VIDA_MINION <= 0 and ConfiJogo.TAMANHO_LISTA == 3:
                 self.lista_rect.pop()
                 ConfiJogo.TAMANHO_LISTA = 2
+                
         
             # CALCULA A DISTANCIA DE CADA PERSOANGEM PARA O NPC
             d1 = int(math.sqrt((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P1_POSICAO_X)**2 + (ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P1_POSICAO_Y)**2))
@@ -614,5 +619,21 @@ class Tela_Jogo:
                     (self.matriz[(y + altura)//16][(x - self.velocidade2 + largura)//16] == 1)):
                       ConfiJogo.P2_POSICAO_X -= self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "OESTE"
+
+            # ATAQUE EM AREA JOGADOR 1
+            if pg.key.get_pressed()[pg.K_z]:
+                self.ataque_area.ataque_area_p1()
+
+            # ATAQUE EM AREA JOGADOR 2
+            if pg.key.get_pressed()[pg.K_n]:
+                self.ataque_area.ataque_area_p2()
+
+            #AUTO-AÇÃO JOGADOR 1
+            if pg.key.get_pressed()[pg.K_x]:
+                self.auto_acao.cura_p1()
+
+            #AUTO-AÇÃO JOGADOR 2
+            if pg.key.get_pressed()[pg.K_m]:
+                self.auto_acao.cura_p2()   
 
             pg.display.flip()

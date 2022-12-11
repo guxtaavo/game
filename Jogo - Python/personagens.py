@@ -9,3 +9,7 @@ class Personagens:
     GUERREIRO = ["img/guerreiro.png", 5, 2, 0, 1]
     # VIDA VARIANDO DE 1-20
     # VELOCIDADE E ATAQUES VARIANDO DE 1-5
+
+
+    def apagar(self):
+        del self
