@@ -80,11 +80,13 @@ class Jogo:
 
             tela_vencedor = Tela_Vencedor(self.tela)
             tela_vencedor.rodar()
-
-            ConfiJogo.P1_POSICAO_X = 100
+            
+            # PARA QUANDO ACABAR A PRIMEIRA PARTIDA, OS PERSONAGENS VOLTAREM A POSIÇÃO INICIAL
             ConfiJogo.P1_POSICAO_X = 100
             ConfiJogo.P1_POSICAO_Y = 100
             ConfiJogo.P2_POSICAO_X = 400
             ConfiJogo.P2_POSICAO_Y = 400
+            ConfiJogo.MINION_POSICAO_X = 560
+            ConfiJogo.MINION_POSICAO_Y = 60
             
     

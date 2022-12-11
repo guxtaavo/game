@@ -49,7 +49,7 @@ class Curta_Distancia:
             self.tela = tela
            
             self.distanciap3p1 = math.sqrt(math.pow((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P1_POSICAO_X), 2)+math.pow((ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P1_POSICAO_Y), 2))
-                
+            
             self.distanciap3p2= math.sqrt(math.pow((ConfiJogo.MINION_POSICAO_X - ConfiJogo.P2_POSICAO_X), 2)+math.pow((ConfiJogo.MINION_POSICAO_Y - ConfiJogo.P2_POSICAO_Y), 2))
                 
             if self.distanciap3p1 < 60:

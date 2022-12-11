@@ -234,14 +234,12 @@ class Tela_Jogo:
                             (self.matriz[(y - self.velocidade3 + altura)//16][x//16] == 3) or \
                             (self.matriz[(y - self.velocidade3 + altura)//16][(x + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[(y - self.velocidade3)//16][x//16] == 1) or \
                             (self.matriz[(y - self.velocidade3)//16][(x + largura)//16] == 1) or \
                             (self.matriz[(y - self.velocidade3 + altura)//16][x//16] == 1) or \
                             (self.matriz[(y - self.velocidade3 + altura)//16][(x + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_Y -= self.velocidade3
-                                print("teste")
 
 
                     if ConfiJogo.P1_POSICAO_Y > ConfiJogo.MINION_POSICAO_Y:
@@ -255,14 +253,12 @@ class Tela_Jogo:
                             (self.matriz[(y + self.velocidade3 + altura)//16][x//16] == 3) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][(x + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[(y + self.velocidade3)//16][x//16] == 1) or \
                             (self.matriz[(y + self.velocidade3)//16][(x + largura)//16] == 1) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][x//16] == 1) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][(x + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_Y += self.velocidade3
-                                print("teste")
 
                     if ConfiJogo.MINION_POSICAO_X < ConfiJogo.P1_POSICAO_X:
                         self.rect3_teste = pg.Rect(ConfiJogo.MINION_POSICAO_X + self.velocidade3, ConfiJogo.MINION_POSICAO_Y, self.largura_imagem3, self.altura_imagem3)
@@ -275,14 +271,12 @@ class Tela_Jogo:
                             (self.matriz[y//16][(x + self.velocidade3 + largura)//16] == 3) or \
                             (self.matriz[(y + altura)//16][(x + self.velocidade3 + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[y//16][(x + self.velocidade3)//16] == 1) or \
                             (self.matriz[(y + largura)//16][(x + self.velocidade3)//16] == 1) or \
                             (self.matriz[y//16][(x + self.velocidade3 + largura)//16] == 1) or \
                             (self.matriz[(y + altura)//16][(x + self.velocidade3 + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_X += self.velocidade3
-                                print("teste")
                     
                     if ConfiJogo.MINION_POSICAO_X > ConfiJogo.P1_POSICAO_X:
                         self.rect3_teste = pg.Rect(ConfiJogo.MINION_POSICAO_X - self.velocidade3, ConfiJogo.MINION_POSICAO_Y, self.largura_imagem3, self.altura_imagem3)
@@ -295,7 +289,6 @@ class Tela_Jogo:
                             (self.matriz[y//16][(x - self.velocidade3 + largura)//16] == 3) or \
                             (self.matriz[(y + altura)//16][(x - self.velocidade3 + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[y//16][(x - self.velocidade3)//16] == 1) or \
                             (self.matriz[(y + largura)//16][(x - self.velocidade3)//16] == 1) or \
@@ -315,7 +308,6 @@ class Tela_Jogo:
                             (self.matriz[(y - self.velocidade3 + altura)//16][x//16] == 3) or \
                             (self.matriz[(y - self.velocidade3 + altura)//16][(x + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[(y - self.velocidade3)//16][x//16] == 1) or \
                             (self.matriz[(y - self.velocidade3)//16][(x + largura)//16] == 1) or \
@@ -335,14 +327,12 @@ class Tela_Jogo:
                             (self.matriz[(y + self.velocidade3 + altura)//16][x//16] == 3) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][(x + largura)//16] == 3)):
                                 self.velocidade = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[(y + self.velocidade3)//16][x//16] == 1) or \
                             (self.matriz[(y + self.velocidade3)//16][(x + largura)//16] == 1) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][x//16] == 1) or \
                             (self.matriz[(y + self.velocidade3 + altura)//16][(x + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_Y += self.velocidade3
-                                print("teste")
 
                     if ConfiJogo.MINION_POSICAO_X < ConfiJogo.P2_POSICAO_X:
                         self.rect3_teste = pg.Rect(ConfiJogo.MINION_POSICAO_X + self.velocidade3, ConfiJogo.MINION_POSICAO_Y, self.largura_imagem3, self.altura_imagem3)
@@ -355,14 +345,12 @@ class Tela_Jogo:
                             (self.matriz[y//16][(x + self.velocidade3 + largura)//16] == 3) or \
                             (self.matriz[(y + altura)//16][(x + self.velocidade3 + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[y//16][(x + self.velocidade3)//16] == 1) or \
                             (self.matriz[(y + largura)//16][(x + self.velocidade3)//16] == 1) or \
                             (self.matriz[y//16][(x + self.velocidade3 + largura)//16] == 1) or \
                             (self.matriz[(y + altura)//16][(x + self.velocidade3 + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_X += self.velocidade3
-                                print("teste")
                     
                     if ConfiJogo.MINION_POSICAO_X > ConfiJogo.P2_POSICAO_X:
                         self.rect3_teste = pg.Rect(ConfiJogo.MINION_POSICAO_X - self.velocidade3, ConfiJogo.MINION_POSICAO_Y, self.largura_imagem3, self.altura_imagem3)
@@ -375,14 +363,12 @@ class Tela_Jogo:
                             (self.matriz[y//16][(x - self.velocidade3 + largura)//16] == 3) or \
                             (self.matriz[(y + altura)//16][(x - self.velocidade3 + largura)//16] == 3)):
                                 self.velocidade3 = 1
-                                print("velocidade")
                         if self.rect3_teste.colliderect(self.rect1) == False and self.rect3_teste.colliderect(self.rect2) == False\
                             and not ((self.matriz[y//16][(x - self.velocidade3)//16] == 1) or \
                             (self.matriz[(y + largura)//16][(x - self.velocidade3)//16] == 1) or \
                             (self.matriz[y//16][(x - self.velocidade3 + largura)//16] == 1) or \
                             (self.matriz[(y + altura)//16][(x - self.velocidade3 + largura)//16] == 1)):
                                 ConfiJogo.MINION_POSICAO_X -= self.velocidade3
-                                print("teste")
 
            
             # CHAMANDANDO OS ATAQUES PARA TELA

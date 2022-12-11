@@ -11,14 +11,14 @@ class Vida:
         self.posicao_x = posicao_x
         self.posicao_y = posicao_y
 
-    # FUNÇÃO PARA DESENHAR A VIDA EM CIMA DO PERSONAGEM, BEM COMO FAZER DIMINUIR CASO SOFRA ALGUM DANO
+    # FUNÇÃO PARA DESENHAR A VIDA EM CIMA DO PERSONAGEM, BEM COMO FAZER DIMINUIR A BARRA CASO SOFRA ALGUM DANO
     def desenha_vida(self, tela):
 
-                                    #tela, cor, posicao, largura e altura.
+        # DESENHANDO VIDA DO PERSOANGEM 1
         pg.draw.rect(tela, ((255, 0, 0)), (ConfiJogo.P1_POSICAO_X-9 , (ConfiJogo.P1_POSICAO_Y-15), ConfiJogo.VIDA_P1, 10))
         pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.P1_POSICAO_X-9 , (ConfiJogo.P1_POSICAO_Y-15), 61 , 11), 2)
 
-        # VARIAVEL VIDA E VIDA2 TEM QUE COMEÇAR SENDO == A 60 E DESCRESCER DE ACORDO COM O DANO
+        # DESENHANDO VIDA DO PERSONAGEM 2
         pg.draw.rect(tela, ((255, 0, 0)), (ConfiJogo.P2_POSICAO_X-9 , (ConfiJogo.P2_POSICAO_Y-15), ConfiJogo.VIDA_P2, 10))
         pg.draw.rect(tela, ((0, 0, 0)), (ConfiJogo.P2_POSICAO_X-9 , (ConfiJogo.P2_POSICAO_Y-15), 61 , 11), 2)
 

@@ -50,7 +50,6 @@ class Tela_Vencedor:
     def rodar(self):
             while self.esta_rodando:                
                 self.desenha()
-                # self.coloca_imagem_tela(self.tela)
                 self.tratamento_de_eventos()    
                 self.atualiza_estado()
 
