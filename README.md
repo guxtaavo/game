@@ -3,11 +3,11 @@ Desenvolvimento de um jogo utilizando a linguagem Python com o auxilio da biblio
 Autores: Gustavo Nunes Lopes, Ryan Ferreira e Daruê.
 
 <h3>Requisitos para o jogo:</h3>
- <p> - Instale o VSCode no seu computador.
-     link para assistência (https://www.youtube.com/watch?v=_R6YslWRUFk)</p>
- <p> - Instale o Python no seu computador.
+ <p> - Instale o VSCode no seu computador,
+     link para assistência(https://www.youtube.com/watch?v=_R6YslWRUFk)</p>
+ <p> - Instale o Python no seu computador,
      link para assistência (https://www.youtube.com/watch?v=hQayuyeEMy0&t=6s)</p>
- <p> - Instale o Pygame no seu computador.
+ <p> - Instale o Pygame no seu computador,
       link para assistência (https://www.youtube.com/watch?v=BT2cjrxGpWo&t=6s)</p>
 
 Depois de se certificar que você possui os requisitos minimos para a execução do jogo, abra a pasta "Jogo - Python" pelo VSCode, em seguida procure o arquivo "main.py" e logo em seguida você pode executar.
