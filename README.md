@@ -1,6 +1,6 @@
 <h1>Trabalho de programação</h1>
 Desenvolvimento de um jogo utilizando a linguagem Python com o auxilio da biblioteca pygame.<br>
-Autores: Gustavo Nunes Lopes, Ryan Ferreira e Daruê.
+Autores: Gustavo Nunes Lopes, Ryan Ferreira e Daruê Euzébio Fernandes.
 
 <h3>Requisitos para o jogo:</h3>
  <p> - Instale o VSCode no seu computador,
