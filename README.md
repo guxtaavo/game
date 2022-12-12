@@ -17,5 +17,5 @@ Depois de se certificar que você possui os requisitos minimos para a execução
 <p>O jogador 2 se move utilizando as teclas: 'IJKL', ataca a curta distância utilizando o 'O', ataca a longa distância como o 'P'.</p>
  
 <h5>Observação.:</h5>
-Não utilizar o mouse ou o touchpad durante a partida.
-Auto-ação recuperar vida caso não esteja no alcance do ataque a longa distância
+<p>Não utilizar o mouse ou o touchpad durante a partida.</p>
+<p>Auto-ação recuperar vida caso não esteja no alcance do ataque a longa distância</p>
