@@ -70,6 +70,9 @@ class Jogo:
             ConfiJogo.VIDA_P2 = p2[1] * y
             ConfiJogo.VIDA_MINION = minion[1] * z
 
+            ConfiJogo.DANO_AREA_P1 = p1[4]
+            ConfiJogo.DANO_AREA_P2 = p2[4]
+
             # RECEBE OS JOGADORES E PASSA PARA O JOGO OS ATRIBUTOS DO PERSONAGENS
             # EX.: IMG, VIDA, VELOCIDADE...
             jogo = Tela_Jogo(self.tela, p1[0], p1[1], p1[2], p1[3], p1[4], self.tela, p2[0], p2[1], p2[2], p2[3], p2[4], \
@@ -88,5 +91,18 @@ class Jogo:
             ConfiJogo.P2_POSICAO_Y = 400
             ConfiJogo.MINION_POSICAO_X = 560
             ConfiJogo.MINION_POSICAO_Y = 60
+
+
+            ConfiJogo.P1_DISPAROU = False
+            ConfiJogo.P1_DISPARO_COLIDINDO = False
+            ConfiJogo.DISPARO_P1_TELA = False
+            ConfiJogo.X0_BALA_P1 = 100
+            ConfiJogo.Y0_BALA_P1 = 100
+
+            ConfiJogo.P2_DISPAROU = False
+            ConfiJogo.P2_DISPARO_COLIDINDO = False
+            ConfiJogo.DISPARO_P2_TELA = False
+            ConfiJogo.X0_BALA_P2 = 400
+            ConfiJogo.Y0_BALA_P2 = 400
             
     

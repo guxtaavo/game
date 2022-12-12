@@ -5,9 +5,8 @@ from vida_jogador import Vida
 from cronometro import Cronometro
 from ataque_curta import Curta_Distancia
 import math
-from ataque_distancia import Tiro
-from ataque_em_area import Ataque_em_area
-from auto_ação import Auto_acao
+from ataque_em_area import Ataque_Area
+
 
 class Tela_Jogo:
     def __init__(self, tela, imagem, vida, velocidade, ataque_dist, ataque_melee, tela2, imagem2, vida2, velocidade2, ataque_dist2, \
@@ -34,14 +33,9 @@ class Tela_Jogo:
         ConfiJogo.ALTURA_P1 = self.altura_imagem
         self.rect1 = img.get_rect()
         lista_rect.append(self.rect1)
-        self.pos_atual_xp1 = 0
-        self.pos_atual_yp1 = 0
-        self.balas_p1 = []
         self.ultimo_disparo_p1 = None
         self.ataque_melee = ataque_melee
-        self.ataque_area = Ataque_em_area(self.tela, self.rect1)
-        self.auto_acao = Auto_acao()
-        
+        self.ataque_area = Ataque_Area(self.tela, self.rect1)
 
 
         #CRIANDO O SEGUNDO JOGADOR
@@ -59,6 +53,7 @@ class Tela_Jogo:
         ConfiJogo.ALTURA_P2 = self.altura_imagem2
         self.rect2 = img2.get_rect()
         lista_rect.append(self.rect2)
+
         
   
         #CRIANDO O MINION 
@@ -163,7 +158,6 @@ class Tela_Jogo:
                 self.pintar_cenario(self.tela)
                 self.desenha()
                 self.tratamento_de_eventos()
-                Tiro.movimenta_disparo_p1(self)
                 pg.display.flip()
                 if ConfiJogo.VIDA_P1 <= 0 or ConfiJogo.VIDA_P2 <= 0:
                     self.esta_rodando = False
@@ -175,8 +169,23 @@ class Tela_Jogo:
         self.vida2.desenha_vida(self.tela)
         if ConfiJogo.VIDA_MINION > 0:
             self.vida3.desenha_vida(self.tela)
+        
         pg.display.flip()
+        
 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     # FUNÇÃO PARA VERIFICAR O TEMPO DO JOGO
     def jogo_terminou(self):
         if (self.cronometro.tempo_passado() > ConfiJogo.DURACAO_PARTIDA):
@@ -407,7 +416,6 @@ class Tela_Jogo:
                         (self.matriz[(y - self.velocidade + altura)//16][x//16] == 1) or \
                         (self.matriz[(y - self.velocidade + altura)//16][(x + largura)//16] == 1)):
                             ConfiJogo.P1_POSICAO_Y -= self.velocidade
-                            ConfiJogo.ULTIMO_PASSO_P1 = "NORTE"
                 else:
                     if self.rect1_teste.colliderect(self.rect2) == False\
                         and not ((self.matriz[(y - self.velocidade)//16][x//16] == 1) or \
@@ -502,8 +510,8 @@ class Tela_Jogo:
                         ConfiJogo.P1_POSICAO_X -= self.velocidade
                         ConfiJogo.ULTIMO_PASSO_P1 = "OESTE"
 
-            if pg.key.get_pressed()[pg.K_f]:   #necessário checar  o tempo.
-                Tela_Jogo.disparo_p1(self, ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y, 5)           
+          
+                          
             
 
 
@@ -620,20 +628,14 @@ class Tela_Jogo:
                       ConfiJogo.P2_POSICAO_X -= self.velocidade2
                     ConfiJogo.ULTIMO_PASSO_P2 = "OESTE"
 
+
             # ATAQUE EM AREA JOGADOR 1
-            if pg.key.get_pressed()[pg.K_z]:
+            if pg.key.get_pressed()[pg.K_r]:
                 self.ataque_area.ataque_area_p1()
 
             # ATAQUE EM AREA JOGADOR 2
-            if pg.key.get_pressed()[pg.K_n]:
+            if pg.key.get_pressed()[pg.K_p]:
                 self.ataque_area.ataque_area_p2()
 
-            #AUTO-AÇÃO JOGADOR 1
-            if pg.key.get_pressed()[pg.K_x]:
-                self.auto_acao.cura_p1()
-
-            #AUTO-AÇÃO JOGADOR 2
-            if pg.key.get_pressed()[pg.K_m]:
-                self.auto_acao.cura_p2()   
-
             pg.display.flip()
+

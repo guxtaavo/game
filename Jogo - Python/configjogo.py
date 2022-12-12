@@ -59,3 +59,6 @@ class ConfiJogo:
     VELOCIDADE_NPC = 0
 
     TAMANHO_LISTA = 0
+
+    DANO_AREA_P1 = 0 
+    DANO_AREA_P2 = 0
