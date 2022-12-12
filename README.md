@@ -1,6 +1,6 @@
 <h1>Trabalho de programação</h1>
 Desenvolvimento de um jogo utilizando a linguagem Python com o auxilio da biblioteca pygame.<br>
-Autores: Gustavo Nunes Lopes, Ryan Ferreira e Daruê Euzébio Fernandes.
+Autores: Gustavo Nunes Lopes, Ryan Ferreirada Vitoria e Daruê Euzébio Fernandes.
 
 <h3>Requisitos para o jogo:</h3>
  <p> - Instale o VSCode no seu computador,
@@ -15,6 +15,7 @@ Depois de se certificar que você possui os requisitos minimos para a execução
 <h3>Comandos:</h3>
 <p>O jogador 1 se move utilizando as teclas: 'WASD', ataca a curta distância utilizando o 'E', ataca a longa distância com o 'F', ataca em área com o 'Z' e realiza auto-ação com o 'X'.</p>
 <p>O jogador 2 se move utilizando as teclas: 'IJKL', ataca a curta distância utilizando o 'P', ataca a longa distância como o '', ataca em área com o 'N' e realiza auto-ação com o 'M'.</p>
-
+<p>O jogador 1 atira usando a tecla F<p>
+<p>O Jogador 2 atira usando a tecla P<p> 
 <h5>Observação.:</h5>
 Não utilizar o mouse ou o touchpad durante a partida.
