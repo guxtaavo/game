@@ -20,32 +20,38 @@ class Ataque_Area:
             if (self.delta_p1_p2 < self.delta_p1_minion) and self.delta_p1_p2 <= self.alcance:
                 self.rect_area.center = (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
                 ConfiJogo.VIDA_P2 -= self.dano_area_p1
-                ConfiJogo.VIDA_P1 += 1
                 pg.draw.rect(self.tela, (0,0,0), self.rect_area)
+                if ConfiJogo.VIDA_P1 < ConfiJogo.VIDA_P1_CHEIA:
+                    ConfiJogo.VIDA_P1 += 1  
     
             elif (self.delta_p1_minion < self.delta_p1_p2) and self.delta_p1_minion <= self.alcance:
                 self.rect_area.center = (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y)
                 ConfiJogo.VIDA_MINION -= self.dano_area_p1
-                ConfiJogo.VIDA_P1 += 1
                 pg.draw.rect(self.tela, (0,0,0), self.rect_area)
+                if ConfiJogo.VIDA_P1 < ConfiJogo.VIDA_P1_CHEIA:
+                    ConfiJogo.VIDA_P1 += 1  
 
             elif (self.delta_p1_minion == self.delta_p1_p2) and (self.delta_p1_minion,self.delta_p1_p2 <= self.alcance):
                 self.rect_area.center = (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
                 self.rect_area2.center = (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y)
                 ConfiJogo.VIDA_P2 -= self.dano_area_p1
                 ConfiJogo.VIDA_MINION -= self.dano_area_p1
-                ConfiJogo.VIDA_P1 += 1
                 pg.draw.rect(self.tela, (0,0,0), self.rect_area)
                 pg.draw.rect(self.tela, (0,0,0), self.rect_area2)
-            
+                if ConfiJogo.VIDA_P1 < ConfiJogo.VIDA_P1_CHEIA:
+                    ConfiJogo.VIDA_P1 += 1        
             else:
                 ConfiJogo.VIDA_P1 -= 1
                 pg.draw.rect(self.tela, ConfiJogo.PRETO, (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y, ConfiJogo.LARGURA_P1, ConfiJogo.ALTURA_P1))
 
-        elif self.delta_p1_p2 <= self.alcance:
-            self.rect_area.center = (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
-            ConfiJogo.VIDA_P2 -= self.dano_area_p1
-            pg.draw.rect(self.tela, (0,0,0), self.rect_area)
+        else:
+            self.delta_p1_p2 = int(math.sqrt((ConfiJogo.P1_POSICAO_X - ConfiJogo.P2_POSICAO_X)**2 + (ConfiJogo.P1_POSICAO_Y - ConfiJogo.P2_POSICAO_Y)**2))
+            if self.delta_p1_p2 <= self.alcance:
+                self.rect_area.center = (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y)
+                ConfiJogo.VIDA_P2 -= self.dano_area_p1
+                pg.draw.rect(self.tela, (0,0,0), self.rect_area)
+                if ConfiJogo.VIDA_P1 < ConfiJogo.VIDA_P1_CHEIA:
+                    ConfiJogo.VIDA_P1 += 1 
 
     # CONDICIONAIS PARA VERIFICAR A DISTANCIA DO ATAQUE EM AREA, CASO DISPARE ELE SEM ESTAR DENTRO DO RANGE, PERDE VIDA.
     def ataque_area_p2(self):
@@ -55,30 +61,40 @@ class Ataque_Area:
             if (self.delta_p1_p2 < self.delta_p2_minion) and self.delta_p1_p2 <= self.alcance:
                 self.rect_area.center = (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
                 ConfiJogo.VIDA_P1 -= self.dano_area_p2
-                ConfiJogo.VIDA_P2 += 1
                 pg.draw.rect(self.tela, (255,255,255), self.rect_area)
-
+                if ConfiJogo.VIDA_P2 < ConfiJogo.VIDA_P2_CHEIA:
+                    ConfiJogo.VIDA_P2 += 1  
+                
             elif (self.delta_p2_minion < self.delta_p1_p2) and self.delta_p2_minion <= self.alcance:
                 self.rect_area.center = (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y)
                 ConfiJogo.VIDA_MINION -= self.dano_area_p2
-                ConfiJogo.VIDA_P2 += 1
                 pg.draw.rect(self.tela, (255,255,255), self.rect_area)
+                if ConfiJogo.VIDA_P2 < ConfiJogo.VIDA_P2_CHEIA:
+                    ConfiJogo.VIDA_P2 += 1  
 
             elif (self.delta_p2_minion == self.delta_p1_p2) and (self.delta_p2_minion,self.delta_p1_p2 <= self.alcance):
                 self.rect_area.center = (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
                 self.rect_area2.center = (ConfiJogo.MINION_POSICAO_X, ConfiJogo.MINION_POSICAO_Y)
                 ConfiJogo.VIDA_P1 -= self.dano_area_p2
                 ConfiJogo.VIDA_MINION -= self.dano_area_p2
-                ConfiJogo.VIDA_P2 += 1
                 pg.draw.rect(self.tela, (255,255,255), self.rect_area)
                 pg.draw.rect(self.tela, (255,255,255), self.rect_area2)
+                if ConfiJogo.VIDA_P2 < ConfiJogo.VIDA_P2_CHEIA:
+                    ConfiJogo.VIDA_P2 += 1  
+                
 
             elif self.delta_p1_p2 <= self.alcance:
                 self.rect_area.center = (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
                 ConfiJogo.VIDA_P1 -= self.dano_area_p2
-                ConfiJogo.VIDA_P2 += 1
                 pg.draw.rect(self.tela, (255,255,255), self.rect_area)
+                if ConfiJogo.VIDA_P2 < ConfiJogo.VIDA_P2_CHEIA:
+                    ConfiJogo.VIDA_P2 += 1
 
-            else:
-                ConfiJogo.VIDA_P2 -= 1
-                pg.draw.rect(self.tela, ConfiJogo.PRETO, (ConfiJogo.P2_POSICAO_X, ConfiJogo.P2_POSICAO_Y, ConfiJogo.LARGURA_P2, ConfiJogo.ALTURA_P2))
+        else:
+            self.delta_p1_p2 = int(math.sqrt((ConfiJogo.P1_POSICAO_X - ConfiJogo.P2_POSICAO_X)**2 + (ConfiJogo.P1_POSICAO_Y - ConfiJogo.P2_POSICAO_Y)**2))
+            if self.delta_p1_p2 <= self.alcance:
+                self.rect_area.center = (ConfiJogo.P1_POSICAO_X, ConfiJogo.P1_POSICAO_Y)
+                ConfiJogo.VIDA_P1 -= self.dano_area_p2
+                pg.draw.rect(self.tela, (255,255,255), self.rect_area)
+                if ConfiJogo.VIDA_P2 < ConfiJogo.VIDA_P2_CHEIA:
+                    ConfiJogo.VIDA_P2 += 1  

@@ -32,10 +32,12 @@ class ConfiJogo:
     # PARA FAZER COM QUE A BARRA DE VIDA DO P1 FIQUE PROPORCIONAL
     x = int(60 / TelaSelecao.PLAYER1[1])
     VIDA_P1 = int(TelaSelecao.PLAYER1[1] * x)
-
+    VIDA_P1_CHEIA = int(TelaSelecao.PLAYER1[1] * x)
+    
     # PARA FAZER COM QUE A BARRA DE VIDA DO P2 FIQUE PROPORCIONAL
     y = int(60 / TelaSelecao2.PLAYER2[1])
     VIDA_P2 = int(TelaSelecao2.PLAYER2[1] * y)
+    VIDA_P2_CHEIA = int(TelaSelecao2.PLAYER2[1] * y)
 
     # PARA FAZER COM QUE A BARRA DE VIDA DO MINION FIQUE PROPORCIONAL
     z = int(60 / Personagens.GUERREIRO[1])
